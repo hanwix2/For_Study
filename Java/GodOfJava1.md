@@ -39,7 +39,7 @@
 
 * 예약어: public, class, int, return 등 이미 예약된 단어로, 클래스, 메소드, 변수의 이름으로 사용할 수 없다.
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
 
 ## 2장 Hello God Of Java
 
@@ -60,7 +60,7 @@
     e. 예외 목록
     f. 메소드 내용
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
  
 ## 3장 자바를 제대로 알려면 객체가 무엇인지를 알아야 해요
 
@@ -71,7 +71,7 @@
 
 * 클래스 자체만으로 일을 할 수 없고, 객체를 생성해야만 일을 할 수 있다. 
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
  
 ## 4장 정보를 어디에 넣고 싶은데
 
@@ -135,8 +135,8 @@
     * 기본값을 할당하는 버릇을 가지자! (간혹 기본값을 할당하지 않는 경우도 있음)
 
     * boolean의 기본값 = false
-
-> :top: [top](#god-of-java) 
+    
+> :top: [top](#god-of-java-book1) 
 
 ## 5장 계산을 하고 싶어요
 
@@ -153,7 +153,7 @@
 
     * 형 변환 불가능한 경우: boolean / 기본 자료형 ↔ 참조 자료형
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
  
 ## 6장 제가 조건을 좀 따져요
 
@@ -199,7 +199,7 @@
 
     * label: 두개 이상의 반복문이 있을 경우 바깥쪽 루프의 시작점으로 이동하려고 할 때 사용. 반복문 바로 앞에 원하는 이름을 입력하고 콜론(:)을 써주면 된다.
 
-> :top: [top](#god-of-java) 
+> :top: [top](#god-of-java-book1)
  
 ## 7장 여러 데이터를 하나에 넣을 수는 없을까요?
 
@@ -217,7 +217,7 @@
     > (하지만 static은 남발하지 말고 신중히 사용할 것!)
 - 배열의 길이를 구할 땐 “.length” 사용
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
 	
 ## 8장 참조 자료형에 대해서 더 자세히 알아봅시다
 
@@ -267,7 +267,7 @@
     - 하나의 메소드에서는 한 번만 사용 가능
     - 여러 매개 변수가 있다면, 가장 마지막에 선언 *ex) String msg, int...num*
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
 
 ## 9장 자바를 배우면 패키지와 접근 제어자는 꼭 알아야 해요
 
@@ -324,4 +324,4 @@
     - 클래스를 선언할 때 반드시 파일 이름에 해당하는 클래스가 존재해야 한다. (여러 클래스 존재 가능)
     - public으로 선언된 클래스가 소스 내에 있다면, 그 소스 파일의 이름은 public인 클래스명과 동일해야 한다.
 
-> :top: [top](#god-of-java)
+> :top: [top](#god-of-java-book1)
