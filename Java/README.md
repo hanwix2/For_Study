@@ -6,13 +6,13 @@
 ## :pushpin: JAVA
 * 자바의 신
   * [book1](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md)
-    - [프로그래밍이란 무엇인가?](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#1장-프로그래밍이란-무엇인가?)
+    - [프로그래밍이란 무엇인가?](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#1장-프로그래밍이란-무엇인가)
     - [Hello God Of Java](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#2장-hello-god-of-java)
     - [자바를 제대로 알려면 객체가 무엇인지를 알아야 해요](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#3장-자바를-제대로-알려면-객체가-무엇인지를-알아야-해요)
     - [정보를 어디에 넣고 싶은데](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#4장-정보를-어디에-넣고-싶은데)
     - [계산을 하고 싶어요](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#5장-계산을-하고-싶어요)
     - [제가 조건을 좀 따져요](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#5장-제가-조건을-좀-따져요)
-    - [여러 데이터를 하나에 넣을 수는 없을까요?](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#7장-여러-데이터를-하나에-넣을-수는-없을까요?)
+    - [여러 데이터를 하나에 넣을 수는 없을까요?](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#7장-여러-데이터를-하나에-넣을-수는-없을까요)
     - [참조 자료형에 대해서 더 자세히 알아봅시다](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#8장-참조-자료형에-대해서-더-자세히-알아봅시다)
     - [자바를 배우면 패키지와 접근 제어자는 꼭 알아야 해요](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#9장-자바를-배우면-패키지와-접근-제어자는-꼭-알아야-해요)
     - [자바는 상속이라는 것이 있어요](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md#10장-자바는-상속이라는-것이-있어요)
