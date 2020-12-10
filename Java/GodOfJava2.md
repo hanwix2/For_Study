@@ -121,14 +121,16 @@
 ### JIT 컴파일러
 - Just-In-Time / 동적 변환(dynamic translation)
 - 프로그램 실행을 빠르게 하기 위함. 명칭은 컴파일러이지만, 실행시에 적용되는 기술
+
+<p align="center">
+    <img src="./image/JIT.png" alt="Java JIT compiler (자바 프로그램이 실행되는 절차)" width="70%" height="70%" />
+    <br/>
+    Java JIT compiler (자바 프로그램이 실행되는 절차)
+</p>
+
 - 인터프리트 방식과 정적 컴파일 방식을 혼합한 것. 컴파일은 인터프리터에 의해 지속적으로 수행되지만, 필요한 코드의 정보는 캐시에 담아두었다가 재사용한다.
-    > 인터프리트 컴파일 방식: 프로그램을 실행할 때마다 컴파일. 간편하지만 성능이 느리다.
-    > 정적 컴파일 방식: 실행하기 전에 컴파일을 한번만 미리 실행.
-    
-    <p align="center">
-        <img src="./image/JIT.png" alt="Java JIT compiler (자바 프로그램이 실행되는 절차)" width="70%" height="70%" />
-        Java JIT compiler (자바 프로그램이 실행되는 절차)
-    </p>
+    > **인터프리트 컴파일 방식**: 프로그램을 실행할 때마다 컴파일. 간편하지만 성능이 느리다.  
+    > **정적 컴파일 방식**: 실행하기 전에 컴파일을 한번만 미리 실행.
 
 > :top: [top](#god-of-java---book2)
 
