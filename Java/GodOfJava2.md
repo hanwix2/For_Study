@@ -131,7 +131,80 @@
 - 인터프리트 방식과 정적 컴파일 방식을 혼합한 것. 컴파일은 인터프리터에 의해 지속적으로 수행되지만, 필요한 코드의 정보는 캐시에 담아두었다가 재사용한다.
     > **인터프리트 컴파일 방식**: 프로그램을 실행할 때마다 컴파일. 간편하지만 성능이 느리다.  
     > **정적 컴파일 방식**: 실행하기 전에 컴파일을 한번만 미리 실행.
+- **장점**: 반복적으로 수행되는 코드는 매우 빠른 성능을 보인다.
+- **단점**: 처음에 시작할 땐 변환 단계를 거쳐야 하므로 성능이 느리다. (CPU와 JDK의 성능 향상으로 많이 개선됨)
 
-> :top: [top](#god-of-java---book2)
+<br/>
+
+### HotSpot JVM
+1. **HotSPot 클라이언트 컴파일러**
+    - CPU가 하나뿐인 사용자를 위한 컴파일러
+    - 시작 시간은 빠르고, 적은 메모리 점유
+2. **HotSPot 서버 컴파일러**
+    - CPU 코어가 많은 장비에서 어플리케이션을 수행하기 위해 만든 컴파일러
+    - 어플리케이션 수행 속도에 초점
+- 선택 방법
+    - JVM에서 자동 지정 (다음 2가지 조건을 만족하면 **서버 컴파일러**를 선택)
+        1. 2개 이상의 물리적 프로세서
+        2. 2GB 이상의 물리적 메모리
+    - 직접 지정  
+        `$ java -server [클래스명]`  
+        `$ java -client [클래스명]`  
+    - 지정하지 않으면 OS에 따라 어떤 HotSpot 컴파일러를 사용할지 default 설정이 되어 있다. (윈도우는 클라이언트 컴파일러)
+
+### JVM
+- Java Virtual Machine(자바 가상 머신)
+- java 명령어를 통해 어플리케이션이 수행되면, JVM 위에서 동작
+- 작성한 프로그램을 찾고 실행하는 일련의 작업 진행
+- 자동으로 메모리 관리를 해준다. -> **GC**
+
+### GC (Garbage Collection)
+- 동적으로 할당한 메모리 영역(Heap; 모든 Object 타입의 데이터 할당) 중 사용하지 않는 영역을 탐지하여 해제하는 기능
+    > *Object를 가리키는 참조 변수는 Stack에 할당*
+
+- **GC 진행 과정**  
+    "Concurrent Mark and Sweep"
+    1. Garbage Collector가 Stack의 모든 변수를 스캔하면서 각각 어떤 객체를 참조하고 있는지 찾아서 마킹한다. (Mark)
+    2. Reachable Object가 참조하고 있는 객체도 찾아서 마킹한다. (Mark)
+    3. 마킹되지 않은 객체를 Heap에서 제거한다. (Sweep)
+    > **Stop-The-World**: GC를 실행하는 스레드를 제ㅇ외한 나머지 스레드는 모두 작업을 멈추고, GC작업이 완료된 이후에 중단한 작업을 다시 시작한다.
+
+- **GC는 언제 일어날까?**
+
+    <p align="center">
+        <img src="./image/JVM_Structure.jpg" alt="JVM_Structure" />
+        <br/>
+        JVM 구조
+    </p>
+
+    - 힙의 **Young 영역**에는 젊은 객체, **Old 영역**에는 늙은 객체가 존재한다. (Perm 영역에는 클래스나 메소드 정보)
+    - Young 영역은 **Eden 영역**과 **Survival 영역**으로 나뉜다.
+        - **Eden**: 객체를 생성하자마자 저장되는 장소
+
+    - **Minor GC / Young GC**
+        1. Eden 영역에서 객체가 생성
+        2. Eden 영역이 차면 살아있는 객체만 Survival 영역으로 객체가 복사되고(GC), 다시 Eden 영역을 채운다.
+        3. Survival 영역이 차면 다른 Survival 영역으로 객체가 복사된다.(GC) 이후에 2번 과정의(GC) 결과는 다른 Survival 영역으로 간다. 
+        > 두 개의 Survival 영역 중 하나는 반드시 비어있어야 한다.
+    - **Major GC / Full GC**
+        1. 오래 살아있는 객체(영GC를 수행하며 Survival에 있는 객체의 age를 증가시키다 age가 특정 값 이상이 된 객체)들은 Old 영역으로 이동한다. (Promotion)
+        2. Promotion이 진행되면서 Old 영역이 찬다. -> GC
+
+    - Minor와 Major GC 가 반복되며 Garbage Collector가 메모리를 관리한다.
+
+    > *Minor GC가 Major GC 보다 빠르다.*  
+
+- **Garbage Collector 종류**
+    - Serial GC: GC를 처리하는 스레드가 1개. 클라이언트용 장비에 최적화된 GC로 WAS에서 사용하면 속도가 매우 느리다.
+    - Parallel Young Generation Collector
+    - Parallel Old Generation Collector
+    - CMS (Concurrent Mark & Sweep Collecor)
+    - G1 (Garbage First)
+
+> :top: [top](#god-of-java---book2)  
+http://www.libqa.com/wiki/76
 
 <br/><br/>
+
+## 20장 가장 많이 쓰는 패키지는 자바랭
+
