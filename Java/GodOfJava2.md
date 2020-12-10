@@ -29,6 +29,8 @@
     - 플랫폼에 따라 JDK 상이. 하지만 어떤 OS에서 개발하든 JDK 버전만 맞으면 적용할 OS에서 컴파일만 하면 애플리케이션 실행에 문제 없다.
 - **JRE**(Java Runtime Environment): 자바의 실행만을 위한 환경.
 
+<br/>
+
 ### 자바언어의 특징
 1. **단순, 객체지향, 친숙**
     - 자바에 대한 기본 컨셉을 배우는 것은 어렵지 않다.
@@ -114,7 +116,7 @@
     - 람다 표현식 사용이 가능
     - [32장 Java 8에 추가된 것들은?](#32장-java-8에-추가된-것들은?)
 
-> 최신 자바 버전별 차이를 확인하려면 영문 위키피디아에서 **java version history** 검색
+> 최신 자바 버전별 차이를 확인하려면 영문 위키피디아에서 **"java version history"** 검색
 
 <br/>
 
@@ -158,6 +160,8 @@
 - 작성한 프로그램을 찾고 실행하는 일련의 작업 진행
 - 자동으로 메모리 관리를 해준다. -> **GC**
 
+<br/>
+
 ### GC (Garbage Collection)
 - 동적으로 할당한 메모리 영역(Heap; 모든 Object 타입의 데이터 할당) 중 사용하지 않는 영역을 탐지하여 해제하는 기능
     > *Object를 가리키는 참조 변수는 Stack에 할당*
@@ -167,7 +171,8 @@
     1. Garbage Collector가 Stack의 모든 변수를 스캔하면서 각각 어떤 객체를 참조하고 있는지 찾아서 마킹한다. (Mark)
     2. Reachable Object가 참조하고 있는 객체도 찾아서 마킹한다. (Mark)
     3. 마킹되지 않은 객체를 Heap에서 제거한다. (Sweep)
-    > **Stop-The-World**: GC를 실행하는 스레드를 제ㅇ외한 나머지 스레드는 모두 작업을 멈추고, GC작업이 완료된 이후에 중단한 작업을 다시 시작한다.
+
+        > **Stop-The-World**: GC를 실행하는 스레드를 제외한 나머지 스레드는 모두 작업을 멈추고, GC작업이 완료된 이후에 중단한 작업을 다시 시작한다.
 
 - **GC는 언제 일어날까?**
 
@@ -184,15 +189,15 @@
     - **Minor GC / Young GC**
         1. Eden 영역에서 객체가 생성
         2. Eden 영역이 차면 살아있는 객체만 Survival 영역으로 객체가 복사되고(GC), 다시 Eden 영역을 채운다.
-        3. Survival 영역이 차면 다른 Survival 영역으로 객체가 복사된다.(GC) 이후에 2번 과정의(GC) 결과는 다른 Survival 영역으로 간다. 
-        > 두 개의 Survival 영역 중 하나는 반드시 비어있어야 한다.
+        3. Survival 영역이 차면 다른 Survival 영역으로 객체가 복사된다.(GC) 이후에 b 과정의(GC) 결과는 다른 Survival 영역으로 간다. 
+            > 두 개의 Survival 영역 중 하나는 반드시 비어있어야 한다.
     - **Major GC / Full GC**
         1. 오래 살아있는 객체(영GC를 수행하며 Survival에 있는 객체의 age를 증가시키다 age가 특정 값 이상이 된 객체)들은 Old 영역으로 이동한다. (Promotion)
         2. Promotion이 진행되면서 Old 영역이 찬다. -> GC
 
     - Minor와 Major GC 가 반복되며 Garbage Collector가 메모리를 관리한다.
 
-    > *Minor GC가 Major GC 보다 빠르다.*  
+        > *Minor GC가 Major GC 보다 빠르다.*  
 
 - **Garbage Collector 종류**
     - Serial GC: GC를 처리하는 스레드가 1개. 클라이언트용 장비에 최적화된 GC로 WAS에서 사용하면 속도가 매우 느리다.
@@ -208,3 +213,8 @@ http://www.libqa.com/wiki/76
 
 ## 20장 가장 많이 쓰는 패키지는 자바랭
 
+
+
+> :top: [top](#god-of-java---book2)  
+
+<br/><br/>
