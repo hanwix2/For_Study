@@ -236,8 +236,8 @@ http://www.libqa.com/wiki/76
 <br/>
 
 > java.lang 패키지에 정의되어 있는 추가적인 에러 중 주요 2가지  
-- OutOfMemoryError: 메모리가 부족하여 발생하는 에러  
-- StackOverFlowError: 호출된 메소드의 깊이가 너무 깊을 때 발생하는 에러
+> - OutOfMemoryError: 메모리가 부족하여 발생하는 에러  
+> - StackOverFlowError: 호출된 메소드의 깊이가 너무 깊을 때 발생하는 에러
 
 <br/>
 
@@ -268,7 +268,7 @@ http://www.libqa.com/wiki/76
 - 생성자가 없다. 
 - System 클래스에는 3개의 static 변수 존재. 별도의 클래스 객체를 생성할 필요가 없다.
 
-|  선언 및 리턴 타입 | 변수명 |     <center>설명</center>       |
+|  선언 및 리턴 타입 | 변수명 |         설명           |
 | ----------------- | :---: | :------------------------------- |
 |static PrintStream |  err  | 에러 및 오류를 출력할 때 사용한다. |
 |static InputStream |  in   | 입력값을 처리할 때 사용한다.       |
@@ -280,8 +280,8 @@ http://www.libqa.com/wiki/76
 - System 클래스 제공 메소드 분류
     - 시스템 속성값 관리
         > **Properties 클래스**  
-        - java.util 패키지에 속하며 Hashtable의 상속을 받은 클래스.  
-        - 필요 여부와 상관 없이 자바 프로그램을 실행하면 Properties 객체가 생성되며 언제, 어디서든 같은 JVM 내에서 꺼내 사용할 수 있다.
+        > - java.util 패키지에 속하며 Hashtable의 상속을 받은 클래스.  
+        > - 필요 여부와 상관 없이 자바 프로그램을 실행하면 Properties 객체가 생성되며 언제, 어디서든 같은 JVM 내에서 꺼내 사용할 수 있다.
     - 시스템 환경값 조회
         > 환경(environment)값은 대부분 OS나 장비에 관련된 것들이며 변경하지 못하고 읽기만 할 수 있다.
     - GC 수행 *(개인이 수행 금지)*
