@@ -213,7 +213,91 @@ http://www.libqa.com/wiki/76
 
 ## 20장 가장 많이 쓰는 패키지는 자바랭
 
+### java.lang 패키지
+    - 자바의 패키지 중 유일하게 import 하지 않아도 내부의 클래스 사용가능
+    - 자바의 여러가지 필수 기능 제공 (인터페이스, 클래스, 예외 클래스 등)
+        - 언어 관련 기본
+        - 문자열 관련
+        - 기본 자료형 및 숫자 관련
+        - 스레드 관련
+        - 예외 관련
+        - 런타임 관련
+        > 기본적으로 자바로 개발할 때 패키지를 지정할 때에는 같은 역할 및 용도로 묶어서 구분한다.
+    - 자바의 기본 어노테이션이 선언되어 있다.
+        - Deprecated
+        - Override
+        - SuppressWarning
+    
+<p align="center">
+    <img src="./image/javalang.png" alt="java.lang 분류" width="65%" height="65%" />
+    <br/>
+    java.lang 분류 (중요 항목은 붉은색으로 표시)
+</p>
+<br/>
 
+> java.lang 패키지에 정의되어 있는 추가적인 에러 중 주요 2가지  
+- OutOfMemoryError: 메모리가 부족하여 발생하는 에러  
+- StackOverFlowError: 호출된 메소드의 깊이가 너무 깊을 때 발생하는 에러
+
+<br/>
+
+### 숫자를 처리하는 클래스들
+
+자바에서 간단한 계산을 할 때에는 보통 기본 자료형을 사용한다. 기본 자료형은 자바이 힙 영역에 저장되지 않고, 스택 영역에 저장되어 관리된다. 따라서 보다 빠른 계산처리가 가능하다.  
+하지만 기본 자료형의 숫자를 **객체**로 처리해야할 필요가 있을 수 있다.
+
+- 종류: **Byte, Short, Integer, Long, Float, Double, Character, Boolean**
+- 겉보기에는 참조 자료형이지만, 기본 자료형처럼 사용할 수 있다. (자바 컴파일러에서 자동 형변환)
+- Character, Boolean을 제외한 숫자를 처리하는 클래스는 Wrapper Class라고 불리며 Number라는 추상클래스를 확장한다.
+- 공통된 메소드
+    - **parse타입이름()**: 기본 자료형 리턴
+    - **valueOf()**: 참조 자료형 리턴
+- 숫자를 처리하는 참조 자료형을 만든 이유
+    - 매개 변수를 참조 자료형으로만 받는 메소드를 처리하기 위함
+    - 제네릭과 같이 기본 자료형을 사용하지 않는 기능을 사용하기 위함
+    - MIN_VALUE 또는 MAX_VALUE 와 같이 클래스에 선언된 상수 값을 사용하기 위함
+    - 문자열을 숫자로, 숫자를 문자열로 쉽게 변환하고 다양한 진수 변환을 쉽게 처리하기 위함
+- 돈 계산과 같은 중요한 연산을 수행할 땐 다음을 사용 (java.math 패키지내 존재 / java.lang.Number 상속 받음)
+    - 정수형: BigInteger
+    - 소수형: BigDecimal
+
+<br/>
+
+### 각종 정보를 확인하기 위한 System 클래스
+
+- 생성자가 없다. 
+- System 클래스에는 3개의 static 변수 존재. 별도의 클래스 객체를 생성할 필요가 없다.
+
+|  선언 및 리턴 타입 | 변수명 |     <center>설명</center>       |
+| ----------------- | :---: | :------------------------------- |
+|static PrintStream |  err  | 에러 및 오류를 출력할 때 사용한다. |
+|static InputStream |  in   | 입력값을 처리할 때 사용한다.       |
+|static PrintStream |  out  | 출력값을 처리할 때 사용한다.       |
+
+> PrintStream과 InputStream 은 java.io 패키지에 선언
+
+- System 클래스는 이름 그대로 시스템에 대한 정보를 확인하는 클래스이며, 출력과 관련된 메소드는 없다. (출력은 PrintStream 클래스 객체 이용)
+- System 클래스 제공 메소드 분류
+    - 시스템 속성값 관리
+        > **Properties 클래스**  
+        - java.util 패키지에 속하며 Hashtable의 상속을 받은 클래스.  
+        - 필요 여부와 상관 없이 자바 프로그램을 실행하면 Properties 객체가 생성되며 언제, 어디서든 같은 JVM 내에서 꺼내 사용할 수 있다.
+    - 시스템 환경값 조회
+        > 환경(environment)값은 대부분 OS나 장비에 관련된 것들이며 변경하지 못하고 읽기만 할 수 있다.
+    - GC 수행 *(개인이 수행 금지)*
+    - JVM 종료 *(개인이 수행 금지)*
+    - 현재 시간 조회
+    - 기타 관리용 메소드들
+
+<br/>
+
+- **System.out**
+    - 출력을 위한 주요 메소드
+        - print()
+        - println()
+        - format
+        - printf
+        - write
 
 > :top: [top](#god-of-java---book2)  
 
