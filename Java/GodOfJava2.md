@@ -206,6 +206,8 @@
     - CMS (Concurrent Mark & Sweep Collecor)
     - G1 (Garbage First)
 
+<br/>
+
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 http://www.libqa.com/wiki/76
 
@@ -303,6 +305,8 @@ http://www.libqa.com/wiki/76
         > 객체를 출력할 떄는 toString()보다 valueOf()를 사용하는 것이 안전하다.
     - 출력문의 더하기 문장은 StringBuilder로 변환한다.
 
+<br/>
+
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
 <br/><br/>
@@ -342,14 +346,14 @@ http://www.libqa.com/wiki/76
 ## 26장 파일에 있는 것을 읽고 쓰려면 아이오를 알아야죠
 
 ### I/O 는..
-    - 파일을 읽거나 저장할 일이 있을 때 사용
-    - 다른 서버나 디바이스로 보낼 일이 있을 때 사용
-    - Input과 Output은 JVM 기준
-    - 초기 자바에서는 IO를 처리하기 위해 java.io 패키지의 클래스 제공. 
-        - 바이트 기반의 데이터 처리: InputStream / OutputStream
-        - char 기반 문자열로만 되어있는 파일은 Reader / Writer 사용
-    - **JDK 1.4**부터는 보다 빠른 I/O 처리를 위해 **NIO** 추가: 스트림 기반이 아닌 **Buffer**와 **Channel** 기반
-    - **Java 7**에서는 기존의 단점을 보완하고 보다 효율적인 처리를 위해 **NIO2** 추가
+- 파일을 읽거나 저장할 일이 있을 때 사용
+- 다른 서버나 디바이스로 보낼 일이 있을 때 사용
+- Input과 Output은 JVM 기준
+- 초기 자바에서는 IO를 처리하기 위해 java.io 패키지의 클래스 제공. 
+    - 바이트 기반의 데이터 처리: InputStream / OutputStream
+    - char 기반 문자열로만 되어있는 파일은 Reader / Writer 사용
+- **JDK 1.4**부터는 보다 빠른 I/O 처리를 위해 **NIO** 추가: 스트림 기반이 아닌 **Buffer**와 **Channel** 기반
+- **Java 7**에서는 기존의 단점을 보완하고 보다 효율적인 처리를 위해 **NIO2** 추가
 
 ### File, Files 클래스
 - **File**
@@ -377,6 +381,8 @@ http://www.libqa.com/wiki/76
 - Writer의 **append()**: 매개 변수로 CharSequence 형(String, StringBuilder, StringBuffer)을 받아 대부분의 문자열 처리 가능
     > write()와 비슷하지만, 만약 만들어진 문자열이 단순 String이 아닌 StringBuilder나 StringBuffer라면 append() 메소드를 사용하는 것이 편하다.
 - **BufferedWriter**: write()나 append()를 사용하여 데이터를 쓰면 메소드를 호출했을 때마다 파일에 쓰기 때문에 비효율적. 버퍼에 데이터를 보관하다가 버퍼가 차게되면 데이터를 저장하도록 도와준다.
+
+<br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
