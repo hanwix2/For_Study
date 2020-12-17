@@ -341,6 +341,43 @@ http://www.libqa.com/wiki/76
 
 ## 26장 파일에 있는 것을 읽고 쓰려면 아이오를 알아야죠
 
+### I/O 는..
+    - 파일을 읽거나 저장할 일이 있을 때 사용
+    - 다른 서버나 디바이스로 보낼 일이 있을 때 사용
+    - Input과 Output은 JVM 기준
+    - 초기 자바에서는 IO를 처리하기 위해 java.io 패키지의 클래스 제공. 
+        - 바이트 기반의 데이터 처리: InputStream / OutputStream
+        - char 기반 문자열로만 되어있는 파일은 Reader / Writer 사용
+    - **JDK 1.4**부터는 보다 빠른 I/O 처리를 위해 **NIO** 추가: 스트림 기반이 아닌 **Buffer**와 **Channel** 기반
+    - **Java 7**에서는 기존의 단점을 보완하고 보다 효율적인 처리를 위해 **NIO2** 추가
+
+### File, Files 클래스
+- **File**
+    - java.io
+    - 파일 및 경로 정보를 통제하기 위한 클래스
+    - 정체가 불분명하고, 심볼릭 링크 같은 유닉스 계열의 파일에서 사용하는 몇몇 기능을 제대로 제공하지 못한다.
+
+- **Files** 
+    - java.nio.file (Java 7의 NIO2)
+    - File 클래스의 메소드를 대체하여 제공.
+    - 모든 메소드가 static으로 선언되어 별도의 객체 선언 불필요
+
+### InputStream과 OutputStream
+- byte 기반의 데이터 I/O 처리
+- 자바 I/O는 기본적으로 InputStream(입력)과 OutputStream(출력)이라는 추상 클래스를 통해 제공된다.
+- 리소스를 다른 클래스에서도 작업할 수 있게 하던 작업이 종료되면 **close()**로 항상 닫아 주어야 한다.
+    > **리소스**: 파일, 네트워크 연결 등 스트림을 통해서 작업할 수 있는 모든 것
+- OuputStream의 **flush()**
+    - 일반적으로 어떤 리소스에 데이터를 쓸 때, 매번 쓰기 작업을 요청할 때마다 저장하면 효율이 좋지 않다.
+    - 저장을 할 때 buffer를 갖고 데이터를 쌓아 두었다가 어느 정도 차면 "현재 버퍼의 내용을 기다리지 말고 무조건 저장"
+
+### Reader와 Writer
+- char 기반의 문자열을 처리하기 위한 클래스 (Stream은 byte 기반)
+- 작업 종료 후 close() 수행, flush() 등 Stream과 대부분 동일한 메소드
+- Writer의 **append()**: 매개 변수로 CharSequence 형(String, StringBuilder, StringBuffer)을 받아 대부분의 문자열 처리 가능
+    > write()와 비슷하지만, 만약 만들어진 문자열이 단순 String이 아닌 StringBuilder나 StringBuffer라면 append() 메소드를 사용하는 것이 편하다.
+- **BufferedWriter**: write()나 append()를 사용하여 데이터를 쓰면 메소드를 호출했을 때마다 파일에 쓰기 때문에 비효율적. 버퍼에 데이터를 보관하다가 버퍼가 차게되면 데이터를 저장하도록 도와준다.
+
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
 <br/><br/>
