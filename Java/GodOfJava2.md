@@ -110,11 +110,11 @@
     - 각종 코어 기능 성능 개선
     - Compiler API 추가. 프로그램에서 자바 컴파일러 실행 가능
 - **Java 7**
-    - [30장 Java 7에서 달라진 것들에는?](#30장-java-7에서-달라진-것들에는?)
-    - [31장 Java 7에 추가된 것들에는?](#31장-java-7에-추가된-것들에는?)
+    - [30장 Java 7에서 달라진 것들에는?](#30장-java-7에서-달라진-것들에는)
+    - [31장 Java 7에 추가된 것들에는?](#31장-java-7에-추가된-것들에는)
 - **Java 8**
     - 람다 표현식 사용이 가능
-    - [32장 Java 8에 추가된 것들은?](#32장-java-8에-추가된-것들은?)
+    - [32장 Java 8에 추가된 것들은?](#32장-java-8에-추가된-것들은)
 
 > 최신 자바 버전별 차이를 확인하려면 영문 위키피디아에서 **"java version history"** 검색
 
@@ -389,6 +389,11 @@ http://www.libqa.com/wiki/76
 <br/><br/>
 
 ## 27장 Serializable과 NIO도 살펴 봅시다
+
+### Serializable
+
+
+<br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
