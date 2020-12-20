@@ -331,19 +331,21 @@ http://www.libqa.com/wiki/76
 - 사용법
     - 클래스 선언문에 꺽쇠(<>)와 그 안에 제네릭 타입명
     - 객체 선언시 꺽쇠(<>) 안에 각 타입 명시
-        > 실행 시 다른 타입으로 잘못 형 변환하여 문제가 발생할 일이 없다.
+        > *실행 시 다른 타입으로 잘못 형 변환하여 문제가 발생할 일이 없다.*
 
 - 제네릭 타입 이름 명명 기본 규칙
-    - 아무거나 사용해도 되지만 되도록이면 명명 규칙에 따라 지정
+    > *아무거나 사용해도 되지만 되도록이면 명명 규칙에 따라 지정*
 
     | 타입명 | 의미 |
-    | - | - |
+    |:-:| - |
     | E | 요소(Element). 자바 컬렉션에서 주로 사용 |
     | K | 키 |
     | V | 값 |
     | N | 숫자 |
     | T | 타입 |
     | S, U, V | 두 번째, 세 번째, 네 번째에 선언되는 타입 |
+
+<br/>
 
 - **제네릭의 wildcard 타입**
     - 메소드 선언시 제네릭 타입의 제한을 해소하기 위해 특정 타입 대신 **<?>** 사용
@@ -357,6 +359,7 @@ http://www.libqa.com/wiki/76
             System.out.println(value);
         }
         ```
+<br/>
 
 - **제한이 있는 Bounded wildcard 타입**
     - 아무 제약 없는 <?>은 어떤 타입도 올 수 있으므로, 타입의 제한을 걸어둠
@@ -368,6 +371,8 @@ http://www.libqa.com/wiki/76
             System.out.println(value);
         }
         ```
+
+<br/>
 
 - **메소드를 제네릭하게 선언하기**
     앞서 설명한 wildcard로는 매개 변수로 사용된 객체에 값을 추가할 수 없다.
@@ -414,6 +419,75 @@ http://www.libqa.com/wiki/76
 <br/><br/>
 
 ## 25장 쓰레드는 개발자라면 알아두는 것이 좋아요
+
+    자바 프로그램 하나를 실행하면 하나의 프로세스가 추가되고, 그 안에 여러 개의 스레드가 수행된다.  
+    그리고 필요시에 쉽게 스레드를 추가하여 실행시킬 수 있다.
+
+### Thread
+- 스레드를 시작할 수 있는 인터페이스와 클래스
+    - **Runnable** 인터페이스
+        - 선언 예:
+            ```java
+            public class RunnableSample implements Runnable {
+                public void run() {
+                    System.out.println("This is RunnableSample's run() method.");
+                }
+            }
+            ```
+        - 사용 예:
+            ```java
+            RunnableSample runnable = new RunnableSample();
+            new Thread(runnable).start();
+            ```
+
+    <br/>
+
+    - **Thread** 클래스
+        - 선언 예:
+            ```java
+            public class ThreadSample extends Thread {
+                public void run() {
+                    System.out.println("This is ThreadSample's run() method.");
+                }
+            }
+            ```
+        - 사용 예:
+            ```java
+            ThreadSample thread = new RunnablThreadSampleeSample();
+            thread.start();
+            ```
+
+<br/>
+
+- 정리
+    - Runnable 인터페이스나 Thread 클래스를 직/간접적으로 구현한 클래스만 스레드로 처리될 수 있다.
+    - 스레드를 선언시 public void run() 메소드를 꼭 선언해야 한다.
+    - 스레드 객체의 start() 메소드를 호출하면 run() 메소드가 실행되고 스레드가 시작된다.
+    - 스레드는 run() 메소드가 종료되면 끝난다.
+    - 단, 스레드를 **Daemon**으로 선언한 경우, 프로세스 내의 다른 스레드들이 종료되면 run() 메소드가 종료되지 않더라도 해당 스레드는 종료된다.
+    - 스레드를 실행한 메소드에서 스레드가 종료될 때까지 대기하려면, **join()** 메소드를 사용하면 된다.
+    - Object 클래스에 선언된 wait() 메소드를 호출하면 스레드는 대기 상태가 되며, notify() 나 notifyAll() 메소드를 호출하면 깨어난다.
+    - 수행중인 스레드를 종료시키려면 interrupt() 메소드를 호출. 하지만 모든 스레드가 종료되는 것이 아니라 join(), sleep(), wait() 메소드가 호출된 상태에서 중지된다.
+
+<br/>
+
+- 스레드의 상태
+    | 상태 | 의미 |
+    | :-: | -|
+    | NEW | 스레드 객체는 생성되었지만, 아직 시작되지는 않은 상태 |
+    | RUNNABLE | 스레드가 실행 중인 상태 |
+    | BLOCKED | 스레드가 실행 중지 상태이며, 모니터 락(monitor lock)이 풀리기를 기다리는 상태 |
+    | WAITING | 스레드가 대기중인 상태 |
+    | TIMED_WAITING | 특정 시간만큼 스레드가 대기중인 상태 |
+    | TERMINATED | 스레드가 종료된 상태 |
+
+<br/>
+
+- **Synchronized**
+    - 이 예약어를 메소드 선언시 사용하면, 하나의 객체를 공유하는 아무리 많은 스레드가 동시에 이 메소드에 접근한다고 하더라도 하나의 스레드만 해당 메소드를 수행할 수 있다.
+    - 이 예약어를 사용하여 synchronized 블록을 만들면 동일한 객체를 공유하는 블록은 하나의 스레드에서만 수행할 수 있다.
+
+<br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
