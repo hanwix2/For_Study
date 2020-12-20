@@ -313,7 +313,83 @@ http://www.libqa.com/wiki/76
 
 ## 21장 실수를 방지하기 위한 제네릭이라는 것도 있어요
 
-### 
+    형 변환시 발생할 수 있는 문제들을 사전(컴파일 시점)에 점검하기 위해 만든 것
+
+### Object를 사용하지 않는 이유
+- Object 클래스는 모든 클래스의 부모 클래스이므로 컴파일과 매개 변수를 받는 과정에 문제는 없다.
+- 저장되어 있는 값을 꺼낼 때 문제 발생
+    - 각 참조 자료형으로 형변환 필요
+    - 어떤 타입인지 혼동
+        > **instanceof** 예약어를 사용하여 타입을 점검할 수 있지만 번거로운 단점이 있다.
+
+<br/>
+
+### Generic
+
+    명시적으로 타입을 지정한다.
+
+- 사용법
+    - 클래스 선언문에 꺽쇠(<>)와 그 안에 제네릭 타입명
+    - 객체 선언시 꺽쇠(<>) 안에 각 타입 명시
+        > 실행 시 다른 타입으로 잘못 형 변환하여 문제가 발생할 일이 없다.
+
+- 제네릭 타입 이름 명명 기본 규칙
+    - 아무거나 사용해도 되지만 되도록이면 명명 규칙에 따라 지정
+
+    | 타입명 | 의미 |
+    | - | - |
+    | E | 요소(Element). 자바 컬렉션에서 주로 사용 |
+    | K | 키 |
+    | V | 값 |
+    | N | 숫자 |
+    | T | 타입 |
+    | S, U, V | 두 번째, 세 번째, 네 번째에 선언되는 타입 |
+
+- **제네릭의 wildcard 타입**
+    - 메소드 선언시 제네릭 타입의 제한을 해소하기 위해 특정 타입 대신 **<?>** 사용
+    - 해당 타입을 정확히 모르기 때문에 Object로 받음
+    - 메소드의 매개 변수로만 사용하는 것이 좋다.
+    - 만약 넘어오는 타입이 한정적이라면 메소드 내에서 instanceof 예약어로 타입 확인
+    - 선언 예
+        ```java
+        public void wildcardMethod(WildcardGeneric<?> c) {
+            Object value = c.getWildcard();
+            System.out.println(value);
+        }
+        ```
+
+- **제한이 있는 Bounded wildcard 타입**
+    - 아무 제약 없는 <?>은 어떤 타입도 올 수 있으므로, 타입의 제한을 걸어둠
+    - **<? extends TypeName>**과 같이 TypeName 클래스를 확장한 모든 클래스를 의미
+    - 선언 예: TypeName이 Car인 경우
+        ```java
+        public void boundedWildcardMethod(WildcardGeneric<? extends Car> c) {
+            Car value = c.getWildCard();
+            System.out.println(value);
+        }
+        ```
+
+- **메소드를 제네릭하게 선언하기**
+    앞서 설명한 wildcard로는 매개 변수로 사용된 객체에 값을 추가할 수 없다.
+    - 메소드 선언부 리턴 타입 앞에 제네릭 타입 선언
+    - 선언 예 1:
+        ```java
+        public <T> void genericMethod(WildcardGeneric<T> c, T addValue) {
+            c.setWildcard(addValue);
+            T value = c.getWildcard();
+            System.out.println(value);
+        }
+        ```
+    - 선언 예 2: bounded wildcards를 사용할 경우
+        ```java
+        public <T extends Car> void boundedGenericMethod(WildcardGeneric<T> c, T addValue) {}
+        ```
+    - 선언 예 3: 제네릭 타입이 여러 개인 경우
+        ```java
+        public <S, T extends Car> void multiGenericMethod(WildcardGeneric<T> c, T addValue, S another) {}
+        ```
+
+<br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
