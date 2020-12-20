@@ -443,6 +443,28 @@ http://www.libqa.com/wiki/76
 
 ## 28장 다른 서버로 데이터를 보내려면 어떻게 하면 되나요?
 
+### TCP (Transmission Control Protocol)
+- 연결 기반 프로토콜
+- 상대방이 데이터를 받았는지 확실히 보장
+- 데이터가 전송된다는 보장을 받을 수 있지만 내부적으로 처리되는 절차가 복잡하여 비싸고 느리다.
+- ex) HTTP, FTP, Telnet
+- **Socket** 클래스 사용
+
+### UDP (User Datagram Protocol)
+- 데이터를 제대로 받았는지 보장할 수 없음
+- 데이터가 유실되어도 큰 문제가 없는 시스템에 사용. TCP 보다 싸고 빠르다.
+- **DatagramSocket** 클래스 사용
+
+### port
+- 0 ~ 1023: 이미 지정된 포트(사용 자제)
+- 1024 ~ 65,535(16bits): 임의로 사용 가능
+
+### 자바에서 웹 페이지 요청을 하려면
+- Apache의 Http Components 사용
+- URL 클래스는 권장하지 않음. (연결에 대한 상세한 설정 불가)
+
+<br/>
+
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book2)  
 
 <br/><br/>
