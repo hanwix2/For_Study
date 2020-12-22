@@ -346,20 +346,130 @@
 
 ## 10장 자바는 상속이라는 것이 있어요
 
-### 상속이란?
+### 상속
 - **자식 -> 부모** 상속 관계
     - 부모 클래스에서는 기본 생성자를 만들어 놓는 것 외에는 상속을 위해 아무런 작업을 할 필요가 없다.
     - 자식 클래스는 클래스 선언 시 **extends** 다음에 부모 클래스 이름을 적어준다.
-    - 자식 클래스의 생성자가 호출되면, 자동으로 부모 클래스의 **기본 생성자**가 실행된다.
-        - 만약 부모 클래스에 기본 생성자 없이 매개 변수를 받는 생성자만 있을 시 에러 발생 (기본 생성자를 자동으로 생성하지 않는다.)
-            - 해결방법1) 부모 클래스에 "매개 변수가 없는" 기본 생성자를 만든다.
-            - 해결방법2) 자식 클래스에 부모 클래스의 생성자를 명시적으로 지정하는 **super()**를 사용 
-    - 자식 클래스는 부모 클래스에 선언되어 있는 public 및 protected 변수와 메소드를 사용할 수 있다.
+    - 자식 클래스의 생성자가 호출되면, 자동으로 부모 클래스의 **기본 생성자**가 먼저 실행된다.
+        > 만약 부모 클래스에 기본 생성자 없이 매개 변수를 받는 생성자만 있을 시 에러 발생 (기본 생성자를 자동으로 생성하지 않는다.)
+        >   - 해결방법1) 부모 클래스에 "매개 변수가 없는" 기본 생성자를 만든다.
+        >   - 해결방법2) 자식 클래스에 부모 클래스의 생성자를 명시적으로 지정하는 **super()**를 사용 
+    - 자식 클래스는 부모 클래스에 선언되어 있는 public 및 protected 변수와 모든 메소드를 사용할 수 있다.
+        > *부모 클래스에서 private으로 선언된 변수는 자식 클래스에서 사용 불가능*
+    - 자식 클래스에서는 부모 클래스에 선언되지 않은 변수와 메소드를 선언할 수 있다.
     - 다중 상속은 불가능
 
     > 상속을 하는 이유: 하나의 클래스를 잘 만들어 놓은 게 있으면, 그 클래스를 상속받아 추가적인 기능을 넣을 수 있다.
 
+<p align="center">
+    <img src="./image/상속관계.png" alt="상속 관계" width="50%" height="50%" />
+    <br/>
+    상속 관계
+</p>
 
+### 메소드 **Overriding**
+- 정의 및 설명
+    - 자식 클래스에서 부모 클래스에 있는 메소드와 동일하게 선언하는 것
+    - 접근 제어자, 리턴 타입, 메소드 이름, 매개 변수 타입 및 개수가 모두 동일 (동일한 시그니처)
+    - 접근 제어자가 더 확대되는 것은 문제가 안되지만, 축소되는 것은 문제가 된다.
+        > ex) 부모 클래스에서 public으로 선언한 것을 자식이 private으로 선언하면 안된다.
+
+> **Overloading: 확장** (메소드의 매개 변수들을 확장)  
+> **Overriding: 덮어 씀** (부모 클래스의 메소드 시그니처를 복제해서 자식 클래스에서 새로운 것을 만들어내어 부모의 기능을 무시하고 덮어 씀)
+
+<br/>
+
+### 참조 자료형의 형 변환
+- 상속 관계가 성립되면 참조 자료형도 형변환 가능
+    - **자식 타입의 객체를 부모 타입으로** 형 변환 하는 것은 자동으로 된다.
+        - 사용 예: 부모 타입의 객체의 실제 객체를 자식 타입으로 선언
+            ```java
+            ParentCasting parent = new ChildCasting();
+            ```
+    - 반대로 **부모타입의 객체를 자식 타입으로** 형변환 할 때에는 명시적으로 지정해야 한다. 이때, **부모 타입의 실제 객체는 자식 타입**이어야 한다.
+- **instanceof** 예약어로 객체의 타입 확인 가능
+    - instanceof로 타입 확인시 부모 타입도 true라는 결과 반환
+    - 따라서 타입을 점검할 때는 가장 하위에 있는 자식 타입부터 확인
+    - 사용 예:
+        ```java
+        if(tempParent instanceof ChildCasting) {
+            System.out.println("ChildCasting");
+        } else if(tempParent instanceof ParentCasting) {
+            System.out.println("ParentCasting");
+        }
+        ```
+
+<br/>
+
+### 다형성 (Polymorphism)
+    '형태가 다양하다.'  
+    형 변환을 하더라도, 실제 호출되는 것은 원래 객체에 있는 메소드가 호출된다.
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 11장 매번 만들기 귀찮은데 누가 만들어 놓은 거 쓸 수 없나요?
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 12장 모든 클래스의 부모 클래스는 Object에요
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 13장 인터페이스와 추상 클래스, enum
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 14장 다 배운 것 같지만, 예외라는 중요한 것이 있어요
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 15장 String
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 16장 클래스 안에 클래스가 들어갈 수도 있구나
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 17장 어노테이션이라는 것도 알아야 한다
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
+
+<br/><br/>
+
+## 18장 이제 기본 문법은 거의 다 배웠으니 정리해 봅시다
+
+<br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
 
