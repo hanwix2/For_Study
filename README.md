@@ -4,7 +4,7 @@
 ---
 
 ## :pushpin: [Questions](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md)
-* Java
+* [Java](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#java)
 
 <br/>
 
