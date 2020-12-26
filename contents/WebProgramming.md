@@ -41,7 +41,7 @@
     4. 웹 서버에서 웹 브라우저로 HTML 응답
 
 <p align="center">
-    <img src="./images/웹 브라우저와 웹 서버의 통신 과정.png" alt="웹 브라우저와 웹 서버의 통신 과정" width="65%" height="65%"/>
+    <img src="./images/웹 브라우저와 웹 서버의 통신 과정.png" alt="웹 브라우저와 웹 서버의 통신 과정" width="30%" height="30%"/>
     <br/>
     웹 브라우저와 웹 서버의 통신 과정
 </p>
@@ -71,11 +71,11 @@
             2. 헤더
             3. 몸체
 
-<p align="center">
-    <img src="./images/http 요청, 응답 데이터.png" alt="http 요청, 응답 데이터" />
-    <br/>
-    http 요청, 응답 데이터
-</p>
+        <p align="center">
+        <img src="./images/http 요청, 응답 데이터.png" alt="http 요청, 응답 데이터" />
+        <br/>
+        http 요청, 응답 데이터
+        </p>
 
         - **요청 데이터**
             - 요청 줄: GET이나 POST와 같은 HTTP 요청 방식(method)과 요청하는 자원의 경로를 지정
@@ -115,11 +115,11 @@
     - HTML, XML, JSON, 바이너리 파일 등의 응답을 생성하는데 필요한 기능 제공
 - **WAS (Web Application Server)**
 
-<p align="center">
-    <img src="./images/WAS.png" alt="WAS는 클라이언트의 요청이 오면, 알맞은 프로그램을 실행해서 응답을 생성한다." width="70%" height="70%"/>
+    <p align="center">
+    <img src="./images/WAS.png" alt="WAS는 클라이언트의 요청이 오면, 알맞은 프로그램을 실행해서 응답을 생성한다." width="60%" height="60%"/>
     <br/>
     WAS는 클라이언트의 요청이 오면, 알맞은 프로그램을 실행해서 응답을 생성한다.
-</p>
+    </p>
 
     - JSP를 이용해 만든 프로그램을 실행하기 위한 서버 프로그램
     - 단순 웹 서버가 정적인 HTML 파일이나 이미지를 제공하는 것과 달리
