@@ -4,6 +4,7 @@
 
 ### :paperclip: Contents
 2. [웹 프로그래밍 기초](#웹-프로그래밍-기초)
+3. [JSP로 시작하는 웹 프로그래밍](#jsp로-시작하는-웹-프로그래밍)
 
 ---
 
@@ -132,5 +133,114 @@
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
 > https://coding-start.tistory.com/348
 > https://m.blog.naver.com/PostView.nhn?blogId=moongmoong_2&logNo=221356141557&proxyReferer=https:%2F%2Fwww.google.com%2F
+
+<br/><br/>
+
+## JSP로 시작하는 웹 프로그래밍
+
+### JSP에서 HTML 문서를 생성하는 기본 코드 구조
+JSP 코드를 작성하는 주된 목적은 웹 브라우저에 보여 줄 HTML 문서를 생성하는 것.  
+JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 다른 종류의 문서를 응답으로 제공할 수도 있지만, 대부분의 JSP 코드는 HTML을 생성한다.  
+
+- 일반적인 JSP 코드 예:
+    ```jsp
+    <%@ page contentType = "text/htmll; charset=utf-8" %>
+    <html>
+    <head>
+        <title>HTML 문서의 제목</title>
+    </head>
+    <body>
+        <%
+            String bootTitle = "JSP 프로그래밍"ㅣ
+            String author = "최범균";
+        %>
+        <b><%= bookTitle %></b>(<%= author %>)입니다.
+    </body>
+    </html>
+    ```
+
+    - 1행: **설정 부분** - JSP 페이지에 대한 설정 정보
+        - 정보:
+            - JSP 페이지가 생성하는 문서의 타입(종류)
+            - JSP 페이지에서 사용할 커스텀 태그
+            - JSP 페이지에서 사용할 자바 클래스 지정
+            > *예시 코드에서는 문서의 타입(HTML)과 캐릭터 셋(UTF-8)을 나타낸다.*
+        - **<%@ page ... %>**: page 디렉티브 - JSP 페이지에 대한 정보를 설정할 때 사용
+
+    - 나머지행: **생성 부분** - HTML 코드 및 JSP 스크립트
+        - 스크립트 코드: HTML 문서를 생성하는 데 필요한 데이터를 생성하고 출력하는 데 사용
+
+<br/>
+
+### JSP 페이지의 구성 요소
+
+- **디렉티브 (Directive)**
+    - JSP 페이지에 대한 설정 정보를 지정할 때 사용.
+    - 선언:
+        ```
+        <%@ 디렉티브이름 속성1="값1" 속성2="값2" ... %>
+        ```
+    - JSP가 제공하는 디렉티브
+        | 디렉티브 | 설명 |
+        | :------: | --- |
+        |page   |JSP 페이지에 대한 정보를 지정. JSP가 생성하는 문서의 타입, 출력 버퍼의 크기, 에러 페이지 등 JSP 페이지에서 필요한 정보를 설정한다.|
+        |taglib |JSP 페이지에서 사용할 태그 라이브러리를 지정. |
+        |include|JS{ 페이지의 특정 영역에 다른 문서를 포함.|
+
+
+- **스크립트 요소**
+    JSP 문서의 내용을 동적으로 생성하기 위해 사용되는 것이 스크립트 요소.  
+    데이터베이스 연동, 자바가 제공하는 다양한 기능을 사용할 수 있다.
+
+    - **표현식(Expression)**: 값을 출력
+    - **스크립트릿(Scriptlet)**: 자바 코드를 실행
+    - **선언부(Declaration)**: 자바 메서드(함수)를 만든다.
+
+- **기본 객체 (Implicit Object)**
+    - JSP는 웹 어플리케이션 프로그래밍을 하는 데 필요한 기능을 제공하는 '기본 객체'를 제공한다.  
+    - **request(요청 파라미터 읽어오기)**, **response(응답 결과 전송)**, **session(세션 처리)**, application(웹 어플리케이션 정보 읽어오기), page 등 존재
+
+- **표현 언어 (Expression Language)**
+    JSP 스크립트 요소는 자바 문법을 그대로 사용할 수 있기 때문에 자바 언어의 특징을 그대로 사용할 수 있다는 장점이 있다.  
+    하지만 스크립트 요소를 사용하면 JSP 코드가 다소 복잡해진다.  
+    **표현 언어를 사용하면 복잡한 코드를 간결하게 작성할 수 있다.**
+
+    - JSP 스크립트 요소 예시:
+    ```JSP
+        <%
+            int a = Integer.parseInt(request.getParameter("a"));
+            int b = Integer.parseInt(request.getParameter("b"));
+        %>
+        a * b = <%= a * b %>
+        ```
+
+    - 표현 언어 사용 예시:
+        ```JSP
+        a * b = ${param.a * param.b}
+        ```
+
+- **표준 액션 태그(Action Tag)와 태그 라이브러리(JSTL)**
+    - **액션 태그**
+        - JSP 페이지에서 특별한 기능을 제공한다.
+        - **<jsp:액션태그이름>**
+        - ex) <jsp:include> 태그: 특정한 페이지의 실행 결과를 현재 위치에 포함
+            ```JSP
+            <%@ page contentType = "text/htmll; charset=utf-8" %>
+            <html>
+            ...
+            <jsp:include page="header.jsp" flush="true" />
+            ...
+            </html>
+            ```
+    - **커스텀 태그**
+        - JSP를 확장시켜주는 기능. 액션 태그와 마찬가지로 태그 형태로 기능 제공
+        - 액션 태그와 달리 **개발자가 직접 개발해주어야 한다.**
+        - 일반적으로 JSP 코드에서 중복되는 것을 모듈화하거나 스크립트 코드를 사용할 때 발생하는 소스 코드의 복잡함을 없애기 위해 커스텀 태그를 사용한다.
+    - **태그 라이브러리(JSTL)**
+        - 커스텀 태그 중 자주 사용하는 것들을 별도로 표준화한 태그 라이브러리
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
 
 <br/><br/>
