@@ -139,8 +139,8 @@
 ## JSP로 시작하는 웹 프로그래밍
 
 ### JSP에서 HTML 문서를 생성하는 기본 코드 구조
-JSP 코드를 작성하는 주된 목적은 웹 브라우저에 보여 줄 HTML 문서를 생성하는 것.  
-JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 다른 종류의 문서를 응답으로 제공할 수도 있지만, 대부분의 JSP 코드는 HTML을 생성한다.  
+ JSP 코드를 작성하는 주된 목적은 웹 브라우저에 보여 줄 HTML 문서를 생성하는 것.  
+ JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 다른 종류의 문서를 응답으로 제공할 수도 있지만, 대부분의 JSP 코드는 HTML을 생성한다.  
 
 - 일반적인 JSP 코드 예:
     ```jsp
@@ -151,7 +151,7 @@ JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 �
     </head>
     <body>
         <%
-            String bootTitle = "JSP 프로그래밍"ㅣ
+            String bootTitle = "JSP 프로그래밍";
             String author = "최범균";
         %>
         <b><%= bookTitle %></b>(<%= author %>)입니다.
@@ -183,9 +183,9 @@ JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 �
     - JSP가 제공하는 디렉티브
         | 디렉티브 | 설명 |
         | :------: | --- |
-        |page   |JSP 페이지에 대한 정보를 지정. JSP가 생성하는 문서의 타입, 출력 버퍼의 크기, 에러 페이지 등 JSP 페이지에서 필요한 정보를 설정한다.|
-        |taglib |JSP 페이지에서 사용할 태그 라이브러리를 지정. |
-        |include|JS{ 페이지의 특정 영역에 다른 문서를 포함.|
+        | page     |JSP 페이지에 대한 정보를 지정. JSP가 생성하는 문서의 타입, 출력 버퍼의 크기, 에러 페이지 등 JSP 페이지에서 필요한 정보를 설정한다.|
+        | taglib   |JSP 페이지에서 사용할 태그 라이브러리를 지정. |
+        | include  |JSP 페이지의 특정 영역에 다른 문서를 포함.|
 
 
 - **스크립트 요소**
@@ -206,7 +206,7 @@ JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 �
     **표현 언어를 사용하면 복잡한 코드를 간결하게 작성할 수 있다.**
 
     - JSP 스크립트 요소 예시:
-    ```JSP
+        ```JSP
         <%
             int a = Integer.parseInt(request.getParameter("a"));
             int b = Integer.parseInt(request.getParameter("b"));
@@ -222,8 +222,8 @@ JSP를 사용해서 파일 다운로드를 구현할 수 있고, XML과 같은 �
 - **표준 액션 태그(Action Tag)와 태그 라이브러리(JSTL)**
     - **액션 태그**
         - JSP 페이지에서 특별한 기능을 제공한다.
-        - **<jsp:액션태그이름>**
-        - ex) <jsp:include> 태그: 특정한 페이지의 실행 결과를 현재 위치에 포함
+        - **&lt;jsp:액션태그이름&gt;**
+        - ex) &lt;jsp:include&gt; 태그: 특정한 페이지의 실행 결과를 현재 위치에 포함
             ```JSP
             <%@ page contentType = "text/htmll; charset=utf-8" %>
             <html>
