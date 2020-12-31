@@ -3,9 +3,10 @@
 > 서적: *최범균의 JSP 2.3 웹 프로그래밍 기초부터 중급까지*
 
 ### :paperclip: Contents
-2. [웹 프로그래밍 기초](#2장-웹-프로그래밍-기초)
-3. [JSP로 시작하는 웹 프로그래밍](#3장-jsp로-시작하는-웹-프로그래밍)
-9. [클라이언트와의 대화 1 - 쿠키](#9장-클라이언트와의-대화-1---쿠키)
+[ 2. 웹 프로그래밍 기초](#2장-웹-프로그래밍-기초)
+[ 3. JSP로 시작하는 웹 프로그래밍](#3장-jsp로-시작하는-웹-프로그래밍)
+[ 9. 클라이언트와의 대화 1 - 쿠키](#9장-클라이언트와의-대화-1---쿠키)
+[10. 클라이언트와의 대화 2 - 세션](#10장-클라이언트와의-대화-2---세션)
 
 ---
 
@@ -257,7 +258,7 @@
     - 웹 서버와 웹 브라우저 양쪽에서 생성 가능 (JSP에서 생성하는 쿠키는 서버 쪽)
 
     <p align="center">
-    <img src="./images/쿠키의 동작 방식.png" alt="쿠키의 동작 방식" width="60%" height="60%"/>
+    <img src="./images/쿠키의 동작 방식.png" alt="쿠키의 동작 방식" width="47%" height="47%"/>
     <br/>
     쿠키의 동작 방식
     </p>
@@ -354,7 +355,7 @@
 
 7. **쿠키의 유효시간**
     - 쿠키는 유효시간을 갖는다.
-    - 유효시간을 지정하지 않으면 웹 브라우저를 종료할 때 쿠키를 함께 삭제한다.
+    - 유효시간을 지정하지 않으면 웹 브라우저를 종료할 때 쿠키를 함께 삭제한다. (유효시간을 음수로 지정했을 때 포함)
     - 웹 브라우저 종료 후 다시 실행하면 삭제한 쿠키는 서버에 전송되지 않는다.
     - 쿠키의 유효시간을 정해놓으면 그 시간 동안 쿠키가 존재하며, 웹 브라우저를 종료해도 유효시간이 지나지 않았으면 쿠키를 삭제하지 않는다.
     - **setMaxAge()** 메소드 사용. (초 단위로 유효시간 지정)
@@ -375,6 +376,99 @@
 
     앞서 소개한 특정 쿠키를 읽는 방법은 Cookie 목록을 가져와 if-else 블록에서 쿠키 이름을 비교하여 필요한 쿠키를 구한다.  
     이런 구조는 사용할 쿠키가 많아질수록 코드가 복잡해지는 문제가 있다. 
+
+- 편리하게 쿠키를 사용할 수 있도록 도와주는 보조 유틸리티 클래스 예시:
+    ```java
+    package util;
+
+    import java.io.IOException;
+    import java.net.URLDecoder;
+    import java.net.URLEncoder;
+    import java.util.Map;
+
+    import javax.servlet.http.Cookie;
+    import javax.servlet.http.HttpServletRequest;
+
+    public class Cookies {
+
+        private Map<String, Cookie> cookieMap = new java.util.HashMap<String, Cookie>();
+
+        public Cookies(HttpServletRequest request) {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    cookieMap.put(cookies[i].getName(), cookies[i]);
+                }
+            }
+        }
+
+        public Cookie getCookie(String name) {
+            return cookieMap.get(name);
+        }
+
+        public String getValue(String name) throws IOException {
+            Cookie cookie = cookieMap.get(name);
+
+            if (cookie != null) {
+                return null;
+            }
+
+            return URLDecoder.decode(cookie.getValue(), "UTF-8");
+        }
+
+        public boolean exists(String name) {
+            return cookieMap.get(name) != null;
+        }
+
+        public static Cookie createCookie(String name, String value) throws IOException {
+            return new Cookie(name, URLEncoder.encode(value, "UTF-8"));
+        }
+
+        public static Cookie createCookie(String name, String value, String path, int maxAge) throws IOException {
+            Cookie cookie = new Cookie(name, URLEncoder.encode(value, "UTF-8"));
+            cookie.setPath(path);
+            cookie.setMaxAge(maxAge);
+            return cookie;
+        }
+
+        public static Cookie createCookie(String name, String value, String domain, String path, int maxAge) throws IOException {
+            Cookie cookie = new Cookie(name, URLEncoder.encode(value, "UTF-8"));
+            cookie.setDomain(domain);
+            cookie.setPath(path);
+            cookie.setMaxAge(maxAge);
+            return cookie;
+        }
+    }
+    ```
+
+<br/>
+
+## 쿠키를 사용한 로그인 상태 유지
+
+로그인하지 않은 상태에서 접근하면 로그인하도록 유도하는데, 이는 로그인했는지 여부를 확인하는 방법이 필요하다.  
+로그인 상태를 확인할 때 가장 많이 사용하는 방법이 쿠키를 이용하는 것
+
+- 방법
+    1. 로그인에 성공하면 특정 이름을 갖는 쿠키 생성
+        > 웹 브라우저는 요청을 보낼 때마다 쿠키를 전송
+    2. 해당 쿠키가 존재하면 로그인한 상태라고 판단
+    3. 로그아웃하면 해당 쿠키 삭제 
+
+- 주의사항
+    - 아이디를 평문 형태로 쿠키값으로 사용하면 보안에 문제 발생
+        - 웹 브라우저의 자체적인 개발도구를 사용하면 쿠키 값을 쉽게 변경할 수 있다.
+        - 이때 다른 아이디로 서버에 접근 가능
+    - 다양한 암호화 방식을 혼합해서 저장해야 한다.
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
+
+<br/><br/>
+
+## 10장 클라이언트와의 대화 2 - 세션
+
+
 
 <br/>
 
