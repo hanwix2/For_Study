@@ -7,6 +7,7 @@
 [ 3. JSP로 시작하는 웹 프로그래밍](#3장-jsp로-시작하는-웹-프로그래밍)  
 [ 9. 클라이언트와의 대화 1 - 쿠키](#9장-클라이언트와의-대화-1---쿠키)  
 [10. 클라이언트와의 대화 2 - 세션](#10장-클라이언트와의-대화-2---세션)  
+[17. 서블릿 기초](#17장-서블릿-기초)  
 
 ---
 
@@ -615,6 +616,169 @@
 - 같은 웹 브라우저라 하더라도 세션 ID 값을 갖는 쿠키는 서로 다른 경로에 있을 때 서로 다른 값을 갖는다.
 - 같은 서버에서 서로 다른 경로가 서로 다른 JSESSIONID 값을 사용하는 이유는 두 경로가 서로 다른 웹 어플리케이션이기 때문이다. (같은 웹 브라우저라도 session 기본 객체가 다르다.)
 - 다시 말하면, **서로 다른 웹 어플리케이션은 세션을 공유하지 않는다**는 것을 의미한다.
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
+
+<br/><br/>
+
+## 17장 서블릿 기초
+
+### 서블릿 기초
+
+- **서블릿이란?**
+    - JSP 표준이 나오기 전 만들어진 표준
+    - 자바로 웹 어플리케이션을 개발하기 위함
+    - 서블릿 개발 과정은 JSP와 비교해서 조금 더 복잡하다
+    - 하지만, **MVC 패턴**을 지원하는 프레임워크를 만들어야 하는 경우 서블릿으로 기반 코드를 개발하는 경우가 많으므로 서블릿에 대한 이해가 필요하다.
+
+- **일반적인 서블릿 개발 과정**
+    1. 서블릿 규약에 따라 자바 코드 작성
+    2. 자바 코드를 컴파일하여 클래스 파일 생성
+    3. 클래스 파일을 /WEB-INF/classes 폴더에 패키지에 알맞게 위치
+    4. web.xml파일에 서블릿 클래스 설정
+    5. 톰캣 등의 컨테이너 실행
+    6. 웹 브라우저에서 확인
+
+<br/>
+
+1. **서블릿 구현**
+    - 서블릿 클래스를 구현하려면 HttpServlet 클래스를 상속받은 클래스를 작성해야한다.
+    - 처리하고자 하는 HTTP 방식(method)에 따라 알맞은 메소드를 재정의해서 구현한다.
+        > ex) **GET 방식**의 요청을 처리하려면 **doGet()** 메소드 재정의  
+        >    - 파라미터
+        >        - HttpServletRequest: JSP의 request 기본 객체
+        >        - HttpServletResponse: JSP의 response 기본 객체
+    - 재정의한 메소드는 request를 이용해서 웹 브라우저의 요청 정보를 읽어오던가 response를 이용해서 응답을 전송할 수 있다.
+    - 응답을 전송하려면 setContentType() 메소드로 응답의 컨텐츠 타입을 지정해야 한다. (전달되는 값은 JSP의 page 디렉티브 contentType 속성값과 동일)
+        ```java
+        resp.setContentType("text/html; charset=utf-8");
+        ```
+    - 실제로 응답 결과를 웹 브라우저에 전송하려면 getWriter()로 문자열 데이터를 출력할 수 있는 PrintWriter를 구해야 한다.
+        ```java
+        PrintWriter out = resp.getWriter();
+        out.println("<html>");
+        out.println("<head><title>현재시간</title></head>");
+        ...
+        out.println("</html>");
+        ```
+
+2. **web.xml로 매핑**
+    - web.xml 파일에 서블릿 클래스 등록
+        - 설정해야할 것
+            - 서블릿으로 사용할 클래스
+            - 서블릿과 URL 간의 매핑
+        - **&lt;servlet&gt;** 태그 이용
+            - **&lt;servlet-name&gt;**: 해당 서블릿을 참조할 때 사용할 이름
+            - **&lt;servlet-class&gt;**: 서블릿으로 사용할 클래스의 완전한 이름
+            - **&lt;servlet-mapping&gt;**: 해당 서블릿이 어떤 URL을 처리할지에 대한 매핑 정보
+            - **&lt;url-pattern&gt;**: 매핑할 URL 패턴
+
+3. **어노테이션으로 매핑**
+    - 서블릿 3.0 부터는 **@WebServlet** 어노테이션을 사용하면 web.xml 파일에 따로 등록하지 않아도 자동으로 서블릿으로 등록된다.
+    - 어노테이션을 사용할 때 고려할 점은 서블릿이 범용적으로 사용되는 서블릿의 여부이다.
+        - MVC 프레임워크는 어떤 URL을 서블릿이 처리할 지 미리 알 수 없다. 단지, 다양한 요청 URL을 MVC 프레임워크가 처리할 수 있는 기능을 구현할 수 있을 뿐이다.
+        - 이는 @WebServlet 어노테이션을 사용할 경우 서블릿이 처리해야 할 URL 패컨이 변경될 때마다 자바 소스 코드의 urlPatterns 속성값을 변경하고 다시 컴파일해야 한다는 것을 뜻한다.
+        - 반면 어노테이션이 아닌 web.xml 파일을 사용하면 URL 경로가 바뀔 경우 web.xml 파일만 변경하면 된다.
+        - 따라서 서블릿의 용도에 따라 어노테이션을 사용할지 web.xml 설정을 사용할지 결정해야 한다.
+    > 어노테이션과 web.xml에 이중으로 서블릿이 등록될 경우 각각의 객체가 생성되고 각 URL 패턴에 매핑된다.
+
+4. **HTTP 각 방식별 구현 메소드**
+    - GET: doGet()
+    - POST: doPost()
+
+5. **서블릿 로딩과 초기화 (init())**
+
+    <p align="center">
+    <img src="./images/서블릿 로딩과정.PNG" alt="서블릿 로딩과정" width="50%" height="50%"/>
+    <br/>
+    서블릿 로딩과정
+    </p>
+    <br/>
+
+    - 서블릿 컨테이너는 처음 서블릿을 실행할 때 서블릿 객체를 생성한다.
+        - 웹 컨테이너가 서블릿 객체를 생성하고 **init()** 메소드를 호출하여 **서블릿 로딩**을 진행한다.
+        - 서블릿 로딩은 서블릿에 필요한 초기화 작업을 수행하는 것
+    - 이후 요청이 오면 앞서 생성한 서블릿 객체를 그대로 사용한다.
+
+    <br/>
+    - &lt;load-on-startup&gt;
+        - &lt;load-on-startup&gt; 태그를 사용하면 웹 어플리케이션을 시작할 때 서블릿을 로딩한다.
+            <p align="center">
+            <img src="./images/load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화.PNG" alt="load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화" width="50%" height="50%"/>
+            <br/>
+            load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화
+            </p>
+            <br/>
+        - 보통 초기화 작업은 상대적으로 시간이 오래 걸리기 때문에 처음 서블릿을 사용하는 시점보다는 웹 컨테이너를 처음 구동하는 시점에 초기화를 진행하는 것이 좋다.
+        - 웹 어플리케이션을 시작하는 시점에 **커넥션 풀**을 초기화하므로, JSP나 서블릿 코드에서 커넥션 풀을 사용할 수 있게 된다.
+        - 태그의 값은 로딩 순서를 의미. 값을 기준으로 오름차순으로 서블릿을 로딩한다.
+        - @WebServlet 태그를 사용하는 경우 loadOnStartup 속성을 이용해서 로딩 값을 지정한다.
+
+6. **초기화 파라미터**
+    - 서블릿은 코드를 직접 변경하지 않고, 초기화 파라미터로 사용할 값을 변경할 수 있는 방법을 제공한다.
+    - web.xml의 **&lt;init-param&gt;** 태그를 이용해서 서블릿을 초기화할 때 필요한 값을 전달한다.
+        - 자식 태그
+            - **&lt;param-name&gt;**: 초기화 파라미터의 이름 지정
+            - **&lt;param-value&gt;**: 초기화 파라미터의 값 지정
+        - 서블릿 클래스에서 **getInitParameter()** 메소드로 초기화 파라미터에 접근
+            ```java
+            String username = getInitParameter("dbUser");
+            ```
+            - 지정한 파라미터가 존재하지 않으면 null 리턴
+        > 웹 어플리케이션에서 전반적으로 필요한 초기화 작업을 수행하는 또 다른 방법으로는 ServletContextListener를 사용하는 것이 있다.
+    - @WebServlet 어노테이션으로 매핑한 경우
+        - initParams 속성 값으로 @WebInitParam 어노테이션 목록을 전달하면 된다.
+        - 설정 예:
+            ```java
+            @WebServlet(urlPatterns = {"/hello", "/hello1"},
+                initParams={
+                    @WebInitParam(name="greeting", value="Hello"),
+                    @WebInitParam(name="title", value="제목")
+                }
+            )
+            ```
+    > 초기화 파라미터를 사용하는 이유 중 하나는 클래스의 수정 없이 초기화 과정에서 필요한 값을 수정할 수 있기 때문이다.  
+    > 하지만, 소스 코드에 @WebInitParam 어노테이션을 이용해 초기화 파라미터를 설정하면, 초기화 설정을 변경할 때마다 코드를 수정해야하기 때문에 변경의 유연함을 떨어뜨린다.
+
+<br/>
+    
+### URL 패턴 매핑 규칙
+
+    <servlet-mapping> 태그는 <url-pattern> 태그를 사용해서 서블릿과 URL을 매핑하고,  
+    @WebServlet의 경우 urlPatterns 속성을 이용해서 서블릿과 URL을 매핑한다.
+
+- 서블릿 규약 (URL 패턴이 서블릿을 매핑하는 규칙)
+    - '/'로 시작하고 '/*'로 끝나는 url-pattern은 경로 매핑을 위해서 사용한다.
+    - '*.'로 시작하는 url-pattern은 확장자에 대한 매핑을 할 때 사용한다.
+    - 오직 '/'만 포함하는 경우 어플리케이션의 기본 서블릿으로 매핑한다.
+    - 이 규칙 외, 나머지 다른 문자열은 정확한 매핑을 위해서 사용한다.
+
+- 예시 매핑 규칙:
+    | URL 패턴 | 매핑 서블릿 |
+    | :------: | :--------: |
+    | /foo/bar/* | servlet1 |
+    | /baz/*     | servlet2 |
+    | /catalog   | servlet3 |
+    | *.bop      | servlet4 |
+
+<br/>
+
+- 경로에 따른 서블릿 매핑:
+    | 요청 경로 | 일치 URL 패턴 | 요청 처리 서블릿 |
+    | :-------- | :----------- | :-------------- |
+    | /foo/bar/index.html | /foo/bar/* | servlet1 |
+    | /foo/bar/index.bop | /foo/bar/* | servlet1 |
+    | /baz | /baz/*     | servlet2 |
+    | /baz/index.html | /baz/*     | servlet2 |
+    | /catalog | /catalog   | servlet3 |
+    | /catalog/racecar.bop | *.bop      | servlet4 |
+    | /index.bop | *.bop      | servlet4 |
+
+<br/>
+
+> 서블릿 3에 추가된 주요 기능 중 하나는 비동기 서블릿이 있다.
 
 <br/>
 
