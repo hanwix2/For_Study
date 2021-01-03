@@ -9,6 +9,7 @@
 [10. 클라이언트와의 대화 2 - 세션](#10장-클라이언트와의-대화-2---세션)  
 [17. 서블릿 기초](#17장-서블릿-기초)  
 [18. MVC 패턴 구현](#18장-mvc-패턴-구현)  
+[19. 필터](#19장-필터)  
 
 ---
 
@@ -1012,6 +1013,135 @@
     - 단점:
         - 자바 언어에 친숙하지 않으면 접근하기가 쉽지 않다.
         - 작업량이 많다. (커맨드 클래스 + 뷰 JSP)
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
+
+<br/><br/>
+
+## 19장 필터
+
+    필터를 사용하면 JSP/서블릿 등을 실행하기 전 요청이 올바른지  
+    또는 자원에 접근할 수 있는 권한을 가졌는지의 여부를 미리 처리할 수 있다.
+
+### 필터란 무엇인가?
+
+- HTTP 요청과 응답을 변경할 수 있는 재사용 가능한 클래스
+- 필터는 객체 형태로 존재하며 클라이언트에서 오는 요청(request)과 최종 자원(JSP, 서블릿, 기타 자원) 사이에 위치한다.
+- 여러 개의 필터 (필터 체인) 형성이 가능하다.
+
+    <p align="center">
+    <img src="./images/필터1.png" alt="필터의 기본 구조" width="60%" height="60%"/>
+    <br/>
+    필터의 기본 구조
+    <br/>
+    <img src="./images/필터2.png" alt="필터 체인의 구조" width="60%" height="60%"/>
+    <br/>
+    필터 체인의 구조
+    </p>
+    <br/>
+
+- 필터는 정보를 변경할 뿐만 아니라 흐름도 변경할 수 있다.
+    - 클라이언트의 요청을 필터 체인의 다음 단계로 보내는 것이 아닌 다른 자원의 결과를 클라이언트에 전송할 수도 있다.
+    - 사용자의 인증이나 권한 검사와 같은 기능을 구현할 때 용이하다.
+
+<br/>
+
+### 필터의 구현
+
+- 필터 구현의 3가지 핵심
+    - **Filter 인터페이스**: 클라이언트와 최종 자원 사이에 위치하는 필터를 나타내는 객체가 구현해야 하는 인터페이스
+    - **ServletRequestWrapper 클래스**: 필터가 요청을 변경한 결과를 저장하는 래퍼
+    - **ServletResponseWrapper 클래스**: 필터가 응답을 변경하기 위해 사용하는 래퍼
+
+        > *필터 클래스를 컴파일 하려면 서블릿 API가 포함된 jar 파일을 클래스패스에 추가해야 한다.*
+
+<br/>
+
+1. **Filter 인터페이스**
+    - **init():**
+        - `public void init(FilterConfig filterConfig) throws ServletException`
+        - 필터를 초기화할 때 호출된다.
+    - **doFilter():**
+        - `public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, ServletException`
+        - 필터 기능을 수행한다. 
+            1. request 파라미터를 이용하여 요청의 필터 작업 수행
+                > RequestWrapper 클래스를 사용하여 클라이언트의 요청을 변경할 수 있다.
+            2. 요청의 필터링 결과를 체인의 다음 필터에 전달
+                > `chain.doFilter(request, response);`
+            3. response를 이용하여 응답의 필터링 작업 수행
+                > 체인을 통해서 전달된 응답 데이터를 변경하여 그 결과를 클라이언트에 전송한다.
+        - 요청이 있을 때마다 매번 실행된다.
+    - **destroy():**
+        - `public void destroy()`
+        - 필터가 웹 컨테이너에서 삭제될 때 호출된다.
+        - 주로 필터가 사용한 자원을 반납
+
+<br/>
+
+2. **필터 설정하기**
+
+    - **방법1: web.xml 파일에 관련 정보 추가**
+        - &lt;filter&gt; 태그: 웹 어플리케이션에서 사용할 필터 지정
+            - 자식 태그
+                - &lt;filter-name&gt;
+                - &lt;filter-class&gt;
+                - &lt;init-param&gt;: 필터를 초기화할 때, 즉 필터의 init() 메소드를 호출할 때 전달할 파라미터 설정
+        - &lt;filter-mapping&gt; 태그: 특정 자원에 대한 사용할 필터 지정
+            - 자식 태그
+                - &lt;filter-name&gt;
+                - &lt;url-pattern&gt;: 클라이언트가 요청한 특정 URI에 대해서 필터링 할 때 사용
+                - &lt;servlet-name&gt;: &lt;url-pattern&gt;를 사용하지 않고 이 태그를 사용하면 특정 서블릿에 대한 요청에 대해 필터를 적용한다.
+                - &lt;dispatcher&gt;: 필터가 적용되는 시점 설정
+                    - REQUEST: 클라이언트의 요청인 경우 필터를 적용(기본값)
+                    - FORWARD: forward()를 통해 제어 흐름을 이동하는 경우에 필터를 적용
+                    - INCLUDE: include()를 통해 포함되는 경우에 필터 적용
+            - 웹 브라우저의 요청이 동시에 여러 개의 필터 매핑에 적용되는 경우 web.xml 파일에 표시한 순서대로 필터를 적용한다.
+
+    - **방법2: @WebFilter 어노테이션 사용**
+        - 코드 사용 예:
+            ```java
+            @WebFilter(filterName = "xsltFilter", urlPatterns = {"/xml/*"})
+            public class XSLTFilter implements Filter {
+                // 필터 구현
+            }
+            ```
+        - 주요 속성
+            - urlPatterns: 필터를 적용할 URL 패턴 목록
+            - servletNames: 필터를 적용할 서블릿 이름 목록
+            - filterName: 필터의 이름 지정
+            - initParams: 초기화 파라미터 목록
+            - dispatcherType: 필터의 적용할 범위. (기본값은 DispatchType.REQUEST)
+
+<br/>
+
+3. **요청 및 응답 래퍼 클래스**
+
+    - 필터가 제 기능을 하려면 클라이언트의 요청을 변경하고 클라이언트로 가는 응답을 변경할 수 있어야 한다.
+    - 요청과 응답을 변경할 때 **ServletRequestWrapper**와 **ServletResponseWrapper** 클래스를 사용한다.
+    - 기능:
+        - 요청 정보를 변경하여 최종 자원인 서블릿/JSP/HTML/기타 자원에 전달한다.
+            > **요청 변경**: 파라미터, 헤더, 전송 데이터 변경 등
+        - 최종 자원으로부터의 응답을 변경하여 새로운 응답 정보를 클라이언트에 보낸다.
+            > **응답 변경**: 응답 데이터 변경, 압축 등
+    - HTTP 프로토콜에 대한 필터링
+        - **HttpServletRequestWrapper**: 요청 래퍼
+        - **HttpServletResponseWrapper**: 응답 래퍼
+    - chain.doFilter()를 호출할 때 래퍼 객체를 전달함으로 다음 작업 가능
+
+<br/>
+
+### 필터의 응용
+
+- 기능
+    - 사용자 인증
+    - XSL/T를 이용한 XML 문서 변경
+    - 캐릭터 인코딩 필터
+    - 캐싱 필터
+    - 자원 접근에 대한 로깅
+    - 응답 데이터 변환 (HTML 변환, 응답 헤더 변환, 데이터 암호화 등)
+    - 공통 기능 실행
 
 <br/>
 
