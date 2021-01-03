@@ -691,7 +691,7 @@
 5. **서블릿 로딩과 초기화 (init())**
 
     <p align="center">
-    <img src="./images/서블릿 로딩과정.PNG" alt="서블릿 로딩과정" width="50%" height="50%"/>
+    <img src="./images/서블릿 로딩과정.png" alt="서블릿 로딩과정" width="50%" height="50%"/>
     <br/>
     서블릿 로딩과정
     </p>
@@ -706,7 +706,7 @@
     - &lt;load-on-startup&gt;
         - &lt;load-on-startup&gt; 태그를 사용하면 웹 어플리케이션을 시작할 때 서블릿을 로딩한다.
             <p align="center">
-            <img src="./images/load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화.PNG" alt="load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화" width="50%" height="50%"/>
+            <img src="./images/load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화.png" alt="load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화" width="50%" height="50%"/>
             <br/>
             load-on-startup 태그로 DBCPInit 서블릿을 미리 초기화
             </p>
@@ -727,7 +727,8 @@
             String username = getInitParameter("dbUser");
             ```
             - 지정한 파라미터가 존재하지 않으면 null 리턴
-        > 웹 어플리케이션에서 전반적으로 필요한 초기화 작업을 수행하는 또 다른 방법으로는 ServletContextListener를 사용하는 것이 있다.
+        > 웹 어플리케이션에서 전반적으로 필요한 초기화 작업을 수행하는 또 다른 방법으로는  
+        > ServletContextListener를 사용하는 것이 있다.
     - @WebServlet 어노테이션으로 매핑한 경우
         - initParams 속성 값으로 @WebInitParam 어노테이션 목록을 전달하면 된다.
         - 설정 예:
