@@ -10,6 +10,15 @@
 [17. 서블릿 기초](#17장-서블릿-기초)  
 [18. MVC 패턴 구현](#18장-mvc-패턴-구현)  
 [19. 필터](#19장-필터)  
+[20. ServletContextListener 구현](#20장-servletcontextlistener-구현)  
+
+<br/>
+
+etc
+
+<br/>
+
+[Connection Pool](#connection-pool)
 
 ---
 
@@ -1035,7 +1044,7 @@
     <img src="./images/필터1.png" alt="필터의 기본 구조" width="60%" height="60%"/>
     <br/>
     필터의 기본 구조
-    <br/>
+    <br/><br/>
     <img src="./images/필터2.png" alt="필터 체인의 구조" width="60%" height="60%"/>
     <br/>
     필터 체인의 구조
@@ -1143,6 +1152,84 @@
     - 응답 데이터 변환 (HTML 변환, 응답 헤더 변환, 데이터 암호화 등)
     - 공통 기능 실행
 
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
+
+<br/><br/>
+
+## 20장 ServletContextListener 구현
+
+    서블릿은 다양한 시점에서 발생하는 이벤트와 이벤트 처리를 위한 인터페이스를 정의한다.  
+    이것은 이용하면 웹 어플리케이션에서 필요로 하는 데이터의 초기화나 요청 처리 등을 추적할 수 있다.  
+
+- **ServletContextListener 인터페이스**
+    - 웹 어플리케이션이 시작되거나 종료될 때 호출할 메소드를 정의한 인터페이스
+    - 메소드:
+        - 웹 어플리케이션 초기화할 때: `public void contextInitialized(ServletContextEvent sce)`
+        - 웹 어플리케이션 종료할 때: `public void contextDestroyed(ServletContextEvent sce)`
+    
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
+
+<br/><br/>
+
+## Connection Pool
+
+- 문제상황
+    - 데이터베이스 작업이 필요할 때 커넥션을 생성해서 사용한다.
+    - JSP 페이지를 실행할 때마다 커넥션을 생성하고 닫는 데 시간이 소모된다.
+    - 동시 점속자가 많은 웹 사이트에서는 전체 성능이 낮아진다.
+
+<br/>
+
+- **커넥션 풀 (DBCP)**
+    - 데이터베이스와 연결된 커넥션을 미리 만들어서 풀(pool) 속에 저장해 두었다가 필요할 때 커넥션을 풀에서 가져다 쓰고 다시 풀에 반환하는 기법.
+
+        <p align="center">
+        <img src="./images/커넥션 풀.jpg" alt="커넥션 풀" width="60%" height="60%"/>
+        <br/>
+        커넥션 풀 기법
+        </p>
+        <br/>
+    
+    - 특징:
+        - 풀 속에 미리 커넥션이 생성되어 있기 때문에 커넥션을 생성하는 데 드는 연결 시간을 줄일 수 있다.
+        - 커넥션을 계속해서 재사용하기 때문에 생성되는 커넥션 수가 일정하게 유지된다.
+    - 고려사항
+        - connection pool이 너무 작다면, 대기하는 요청이 많아진다.
+        - connection pool이 너무 크다면, 메모리 낭비가 심해진다.
+        - 접속자 수, 서버 부하 등을 고려해 적절한 크기로 조정한다.
+    
+<br/>
+
+- **HTTP 커넥션 풀**
+    - HTTP(TCP) 통신의 문제점:
+        - **TCP handshake**: 연결
+        - **TCP slow start**: 데이터가 성공적으로 전송됨에 따라 패킷 수를 늘린다. (급작스러운 부하와 혼잡을 막기 위함)
+        - **TIME_WAIT 지연과 포트 고갈**: 연결을 close할 때 같은 IP주소와 포트를 사용하는 TCP 연결을 방지. 잘못된 패킷을 받아 오작동할 수 있다.
+    - 해결방법: **병렬 커넥션 + 지속 커넥션 = HTTP Connection Pool**
+        - **병렬 커넥션**
+            - 여러개의 커넥션을 맺어 HTTP 트랜젝션을 병렬로 처리한다.
+            - 장점
+                - HTTP 클라이언트가 여러 개의 커넥션을 맺음으로 여러 개의 트랜잭션을 병렬로 처리
+                - 페이지를 더 빠르게 내려 받는 효과
+                - 최신 브라우저는 6~8 개의 병렬 커넥션
+            - 단점
+                - 다수의 커넥션은 메모리를 많이 소모하고 자체적인 성능 문제 발생
+                - TCP Slow Start가 여러 개의 커넥션에 적용
+                - 각 트랜잭션마다 handshake
+        - **지속 커넥션**
+            - 처리가 완료된 이후에도 TCP 커넥션을 유지한다.
+            - 장점
+                - 커넥션 맺음(handshake) 최소화
+                - TCP Slow Start 최소화 (재사용)
+                - 연결이 최소화 되어 TIME_WAIT의 숫자가 줄어듬
+            - 단점
+                - 잘못 관리할 경우, 연결되어 있는 커넥션이 쌓이면 불필요한 리소스 발생
+        - **병렬 커넥션 + 지속 커넥션 = HTTP Connection Pool**
+            - 적은 수의 병렬 커넥션만을 유지하고 그것을 지속하는 것이 효과적
 <br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#web-programming)  
