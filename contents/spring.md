@@ -2,7 +2,7 @@
 
 ### :paperclip: Contents
 - [Maven vs Gradle](#maven-vs-gradle)
-- [IoC - Inversion of Cnotrol](#ioc---inversion-of-control)
+- [IoC - Inversion of Control](#ioc---inversion-of-control)
 
 ---
 
@@ -100,7 +100,7 @@
 
 <br/><br/>
 
-## IoC - Inversion of Cnotrol
+## IoC - Inversion of Control
 
     "제어권이 뒤바꼈다고?"
 
