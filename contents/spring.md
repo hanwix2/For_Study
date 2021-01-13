@@ -2,6 +2,7 @@
 
 ### :paperclip: Contents
 - [Maven vs Gradle](#maven-vs-gradle)
+- [IoC - Inversion of Cnotrol](#ioc---inversion-of-control)
 
 ---
 
@@ -90,6 +91,65 @@
         - 설정 주입 시 프로젝트의 조건을 체크할 수 있어 프로젝트별로 주입되는 설정을 다르게 할 수 있다.
     - Gradle이 Maven 보다 최대 100배 빠르다.
         - Gradle은 캐시를 사용하기 때문에 테스트 반복 시 차이가 더 커진다.
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#spring-이론)  
+> https://hyojun123.github.io/2019/04/18/gradleAndMaven/  
+> https://bkim.tistory.com/13
+
+<br/><br/>
+
+## IoC - Inversion of Cnotrol
+
+    "제어권이 뒤바꼈다고?"
+
+- **일반적인 (의존성에 대한) 제어권**: "내가 사용할 의존성은 내가 만든다."
+    - 코드 예:
+        ```java
+        class OwnerController {
+            // 사용할 객체를 직접 만든다.
+            private OwnerRepository repository = new OwnerRepository();
+        }
+        ```
+
+<br>
+
+- **IoC**: "내가 사용할 의존성을 누군가 알아서 주겠지"
+    - 내가 사용할 의존성의 타입(또는 인터페이스)만 맞으면 어떤 것이든 상관없다.
+    - 그래야 내 코드 테스트 하기도 편하지
+    - 코드 예:
+        ```java
+        class OwnerController {
+            // 사용할 객체를 선언은 하지만, 직접 생성하진 않는다.
+            private OwnerRepository repo;
+            
+            // 외부에서 만들어진 객체를 생성자를 통해 받아온다.
+            public OwnerController(OwnerRepository repo) {
+                this.repo = repo;
+            }
+            
+            // repo를 사용합니다.
+        }
+        
+        class OwnerControllerTest {
+            @Test
+            public void create() {
+                OwnerRepository repo = new OwnerRepository();
+                OwnerController controller = new OwnerController(repo);
+            }
+        }
+        ```
+<br>
+
+- 정리:
+    - 자기가 사용할 객체를 직접 만들지 않고 외부에서 누군가 만든 객체를 받아오는 것
+    - 즉, 의존성을 만드는 일은 내가 아닌 외부에서 하게되므로 *제어권이 역전*되었다고 볼 수 있다.
+    - 의존성을 주입하는 것을 **DI(Dependency Injection)**라고 부른다.
+
+<br>
+
+> 참고: https://martinfowler.com/articles/injection.html
 
 <br/>
 
