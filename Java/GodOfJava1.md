@@ -463,6 +463,207 @@
 
 ## 17장 어노테이션이라는 것도 알아야 한다
 
+- 기능:
+    - 컴파일러에게 정보 알림
+    - 컴파일할 때와 설치(deployment) 시의 작업을 지정
+    - 실행할 때 별도의 처리가 필요할 때 사용
+
+- 특징:
+    - 클래스, 메소드, 변수 등 모든 요소에 선언 가능
+    - 프로그램에 영향이 있는 것도 있고 없는 것도 있다.
+<br>
+
+### 미리 정해져 있는 어노테이션은 3개뿐
+- **@Override**: 
+    - 해당 메소드가 상위 클래스의 메소드를 Override한 것을 명시적으로 선언
+    - "이 메소드는 Override된 거니까 만약에 내가 잘못 코딩했으면 컴파일러 니가 알려줘야 해~"
+- **@Deprecated**:
+    - 미리 만들어져 있는 클래스나 메소드가 더 이상 사용되지 않는 경우
+    - 경고만 있을 뿐, 에러는 없다.
+    - "얘는 더 이상 사용하지 않으니까 그렇게 알아줘. 그리고 나중에 누가 이거 쓰면 경고 한 번 해주고.."
+- **@SupressWarning**:
+    - 컴파일러에서 경고를 하지만, 프로그램에는 문제가 없는 경우 경고를 억제
+    - 속성값 지정을 한다.
+    - "얘는 내가 일부러 이렇게 코딩한 거니까 니가 경고를 해 줄 필요가 없어"
+
+<br>
+
+### 어노테이션을 선언하기 위한 메타 어노테이션
+
+- 메타 어노테이션
+    - **@Target**: 어노테이션을 어떤 것에 적용할지 선언
+        - 선언 예:
+            ```java
+            @Target(ElementType.METHOD)
+            ```
+        - 적용 대상 목록:
+            | 요소 타입 | 대상 |
+            | ---------| ---- |
+            | CONSTRUCTOR | 생성자 선언시 |
+            | FIELD | enum 상수를 포함한 필드값 선언시 |
+            | LOCAL_VARIABLE | 지역 변수 선언시 |
+            | METHOD | 메소드 선언시 |
+            | PACKAGE | 패키지 선언시 |
+            | PARAMETER | 매개변수 선언시 |
+            | TYPE | 클래스, 인터페이스, enum 등 선언시 |
+
+    - **@Retation**: 얼마나 오래 어노테이션 정보가 유지되는지 선언
+        - 선언 예:
+            ```java
+            @Retention(RetentionPolicy.RUNTIME)
+            ```
+        - 적용 대상 목록:
+            |   | 대상 |
+            | - | ---- |
+            | SOURCE | 어노테이션 정보가 컴파일시 사라짐 |
+            | CLASS | 클래스 파일에 있는 어노테이션 정보가 컴파일러에 의해서 참조 가능. 하지만 가상머신에서는 사라짐 |
+            | RUNTIME | 실행시 어노테이션 정보가 가상머신에 의해서 참조 가능 |
+
+    - **@Document**: 해당 어노테이션에 대한 정보가 Javadocs(API) 문서에 포함된다는 것 선언
+
+    - **@Inherited**: 모든 하위 클래스에서 상위 클래스의 어노테이션을 사용가능하다는 것을 선언
+
+    - **@Interface**: 어노테이션을 선언할 때 사용
+
+<br>
+
+- 어노테이션 선언 예:
+    ```java
+    package c.annotation;
+
+    import ...;
+
+    @Target(ElementType.METHOD)  // 메소드와 클래스에서 어노테이션을 사용하려면 "@Target({ElementType.METHOD, ElementType.TYPE})"으로 지정
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface UserAnnotaion { // @UserAnnotation으로 어노테이션 사용가능
+        
+        public int number(); 
+        public String text() default "This is first annotation";
+
+    }
+    ```
+
+- 어노테이션 사용 예:
+    ```java
+    package c.annotation;
+
+    public class UserAnnotationSample {
+        
+        @UserAnnotaion(number=0)  // number는 기본값이 지정되어 있지 않으므로 반드시 값을 정해주어야 한다.
+        public static void main(String[] args) {
+            UserAnnotationSample sample = new UserAnnotationSample();
+        }
+
+        @UserAnnotation(number=1)
+        public void annotationSample1(){
+            // ...
+        }
+
+        @UserAnnotation(number=2,text="second")
+        public void annotationSample2(){
+            // ...
+        }
+
+        @UserAnnotation(number=3,text="third")
+        public void annotationSample3(){
+            // ...
+        }
+    }
+    ```
+
+<br>
+
+### 어노테이션에 선언한 값은 어떻게 확인하지?
+
+- 사용 예:
+    ```java
+    package c.annotation;
+
+    public class UserAnnotationCheck {
+
+        public static void main(String[] args) {
+            UserAnnotationCheck sample = new UserAnnotationCheck();
+            sample.checkAnnotations(UserAnnotationSample.class);
+        }
+
+        /* 
+            'Class', 'Method'는 자바의 Reflection이라는 API에서 제공하는 클래스
+            Class: 클래스의 정보를 확인하는 데 사용
+            Method: 메소드의 정보를 확인하는 데 사용
+        */
+
+        public void checkAnnotations(Class useClass) {
+            
+            // 해당 클래스에 선언되어 있는 메소드의 목록을 배열로 리턴
+            Method[] methods = useClass.getDeclaredMethods();  
+
+            for(Method method : methods) {
+
+                // 해당 메소드에 선언되어 있는 매개 변수로 넘겨준 어노테이션이 있는지 확인하고, 있을 경우 그 어노테이션의 객체를 리턴
+                UserAnnotation annotation = method.getAnnotation(UserAnnotation.class);  
+
+                if(annotation != null) {
+
+                    // 어노테이션에 선언된 메소드를 호출하여 해당 값 리턴
+                    int number = annotation.number();
+                    String text = annotation.text();
+
+                    System.out.println(method.getName() + "(): number=" + number + ", text=" + text);
+                } else {
+                    System.out.println(method.getName() + "(): annotation is null");
+                }
+            }
+        }
+    }
+    ```
+
+<br>
+
+### 어노테이션도 상속이 안돼요
+
+- 상속을 지원하지 않아 미리 만들어 놓은 어노테이션을 확장하는 것은 불가능하다.
+
+<br>
+
+- **어노테이션이 만들어지기 전**
+    - 모든 자바 어플리케이션의 설정을 XML이나 properties 파일에 지정
+    - 설정이 복잡해지고, 어떤 설정이 어디에 쓰이는지 이해하는데 많은 시간 소요된다.
+
+<br>
+
+- **어노테이션이 만들어진 후**
+    - 각 설정이 필요한 위치에 관련 설정이 존재하면서 코드의 가독성이 좋아졌다.
+    - 하지만 아직도 XML과 같은 설정파일들은 필요한 부분이 존재하기 때문에 남아 있다.
+    - **롬복(lombok)**: 개발자가 필요한 작업을 어노테이션 선언만으로도 편하게 처리할 수 있게 도와준다.
+        - 사용 예:
+            - 기존 코드:
+                ```java
+                private boolean employed = true;
+
+                public boolean isEmployed() {
+                    return employed;
+                }
+
+                public void setEmployed(final boolean employed) {
+                    this.employed = employed;
+                }
+                ```
+            - 롬복 적용:
+                ```java
+                @Getter @Setter private boolean employed = true;
+                ```
+<br>
+
+- **어노테이션의 용도**:
+    - 제약사항 등을 선언하기 위해
+        > @Deprecated, @Override, @NotNull
+    - 용도를 나타내기 위해
+        > @Entity, @TextCase, @WebService
+    - 행위를 나타내기 위해
+        > @Statefull, @Transaction
+    - 처리를 나타내기 위해
+        > @Column, @XmlElement
+
 <br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#god-of-java---book1)  
