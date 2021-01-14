@@ -154,7 +154,5 @@
 <br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#spring-이론)  
-> https://hyojun123.github.io/2019/04/18/gradleAndMaven/  
-> https://bkim.tistory.com/13
 
 <br/><br/>
