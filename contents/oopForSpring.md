@@ -761,6 +761,23 @@
 
 ### PSA - 일관성 있는 서비스 추상화
 
+    Portable Service Abstraction
+
+- 서비스 추상화:
+    - **어댑터 패턴**을 적용해 같은 일을 하는 **다수의 기술**을 **공통의 인터페이스로** 제어할 수 있게 한 것을 서비스 추상화라고 한다.
+
+<br>
+
+- 서비스 추상화의 예:
+    - JDBC
+        - JDBC라는 표준 스펙이 있기에 오라클, MySQL, MS-SQL 무엇을 사용하든 Connection, Statement, ResultSet을 이용해 공통된 방식으로 코드를 작성할 수 있다.
+        - 데이터베이스 종류에 관계없이 같은 방식으로 제어할 수 있는 이유는 어댑터 패턴을 활용했기 때문.
+
+- 스프링에서 서비스 추상화를 위해 제공하는 어댑터
+    - OXM (Object XML Mapping: 객체와 XML 매핑)
+    - 캐시
+    - 트랜젝션
+
 <br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#스프링-입문을-위한-자바-객체-지향의-원리와-이해)  
