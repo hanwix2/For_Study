@@ -23,3 +23,8 @@
 ## :pushpin: Spring
 * [스프링 입문을 위한 자바 객체 지향의 원리와 이해](https://github.com/hanwix2/For_Study/blob/main/contents/oopForSpring.md)
 * [Spring 이론](https://github.com/hanwix2/For_Study/blob/main/contents/spring.md)
+
+<br>
+
+## :pushpin: ETC
+- [IntelliJ(인텔리제이) 단축키](https://github.com/hanwix2/For_Study/blob/main/contents/intelliJ_keymap.md)
