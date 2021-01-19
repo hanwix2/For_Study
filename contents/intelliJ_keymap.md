@@ -26,7 +26,7 @@
 
 <br>
 
-> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#intellij(인텔리제이)-단축키)  
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#intellij인텔리제이-단축키)  
 
 <br/><br/>
 
@@ -41,20 +41,20 @@
 
 <br>
 
-> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#intellij(인텔리제이)-단축키)  
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#intellij인텔리제이-단축키)  
 
 <br/><br/>
 
 ## Debug
 
-**shift + F9**: Debug
-**ctrl + F8**: break point 지정
-**F8**: Step Over
-**F7**: Step Into
-**shift + F8**: Step Out
+- **shift + F9**: Debug
+- **ctrl + F8**: break point 지정
+- **F8**: Step Over
+- **F7**: Step Into
+- **shift + F8**: Step Out
 
 <br>
 
-> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#intellij(인텔리제이)-단축키)  
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#intellij인텔리제이-단축키)  
 
 <br/><br/>
