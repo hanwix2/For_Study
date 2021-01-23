@@ -3,6 +3,8 @@
 ### :paperclip: Contents
 - [Maven vs Gradle](#maven-vs-gradle)
 - [IoC - Inversion of Control](#ioc---inversion-of-control)
+- [AOP - Aspect Oriented Programming](#aop---aspect-oriented-programming)
+- [PSA - Portable Service Abstraction](#psa---portable-service-abstraction)
 
 ---
 
@@ -150,6 +152,86 @@
 <br>
 
 > 참고: https://martinfowler.com/articles/injection.html
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#spring-이론)  
+
+<br/><br/>
+
+## AOP - Aspect Oriented Programming
+
+**"흩어진 코드를 한 곳으로 모은다."**
+
+- 예시)
+    - 가정: 여러 메소드의 성능을 측정하려고 한다.
+    - 문제상황: 모든 메소드에 성능 측정 코드를 시작 전과 작업 후에 삽입 해야한다. (복잡한 코드 & 유지보수성 저하)
+    - 해결방법: 성능 측정 코드를 한 곳에만 정의하고, 각 메소드에 직접 코드를 삽입하지 않아도 삽입한 것처럼 작동 -> AOP
+
+<br>
+
+- **AOP 구현 방법**
+    1. 컴파일 (AspectJ)
+        - A.java ----(AOP)---> A.class
+        - 자바 코드에는 해당 코드가 없지만, 컴파일한 파일에는 코드가 존재하는 것처럼 컴파일해준다.
+        - 별도의 컴파일 과정 필요
+    2. 로드 타입 - 바이트코드 조작 (AspectJ)
+        - A.java -> A.class ---(AOP)---> 메모리 
+        - 해당 코드가 없는 자바 파일을 컴파일하여 class파일이 생성되고, class loader가 class를 읽어와 메모리에 올리는 시점 코드가 있는 것처럼 조작
+        - java agent, 로드타임 위빙, 약간의 부하 존재
+    3. 런타임 - 프록시 패턴 (스프링 AOP)
+        - 프록시 패턴을 사용하여 AOP와 같은 효과
+        - 기존의 코드를 건드리지 않고 새 기능 추가
+        - Spring AOP에서는 자동으로 이뤄진다. 
+        - (원래 객체의 기능에 기능이 추가된 프록시가 Bean으로 등록되고 기능을 수행하는 객체 대신 작동)
+        > 참고: https://refactoring.guru/design-patterns/proxy
+
+<br>
+
+- **AOP 적용 예제**
+
+    >"@LogExecutionTime으로 메소드 처리 시간 로깅하기"
+
+    - @LogExecutionTime 어노테이션 생성 (어디에 적용할 지 표시해두는 용도)
+        ```java
+        @Target (ElementType. METHOD )
+        @Retention (RetentionPolicy. RUNTIME )
+        public @interface LogExecutionTime {
+        }
+        ```
+
+    - 실제 Aspect 
+        ```java
+        @Component
+        @Aspect
+        public class LogAspect {
+        Logger logger = LoggerFactory. getLogger (LogAspect. class ) ;
+
+        // @LogExecutionTime 어노테이션 달린 곳에 다음 작업을 수행
+        @Around ( "@annotation(LogExecutionTime)" )
+        public Object logExecutionTime (ProceedingJoinPoint joinPoint) throws Throwable {
+        StopWatch stopWatch = new StopWatch() ;
+        stopWatch.start() ;
+
+        // 원래 작업 수행 (joinPoint: @LogExecutionTime 어노테이션이 붙어있는 메소드)
+        Object proceed = joinPoint.proceed() ;
+
+        stopWatch.stop() ;
+        logger .info(stopWatch.prettyPrint()) ;
+        return proceed ;
+        }
+        }
+        ```
+
+<br/>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#spring-이론)  
+
+<br/><br/>
+
+## PSA - Portable Service Abstraction
+
+
 
 <br/>
 
