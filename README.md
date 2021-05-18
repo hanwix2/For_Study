@@ -12,6 +12,7 @@
 * 자바의 신
   * [book1](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava1.md)
   * [book2](https://github.com/hanwix2/For_Study/blob/main/Java/GodOfJava2.md)
+* [Effective Java](https://github.com/hanwix2/For_Study/blob/main/Java/EffectiveJava.md)
 
 <br/>
 
