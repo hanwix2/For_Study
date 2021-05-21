@@ -27,5 +27,10 @@
 
 <br>
 
+## :pushpin: CI/CD
+* [초보를 위한 젠킨스2 활용 가이드 2e](https://github.com/hanwix2/For_Study/blob/main/contents/Jenkins2Guide.md)
+
+<br>
+
 ## :pushpin: ETC
 - [IntelliJ(인텔리제이) 단축키](https://github.com/hanwix2/For_Study/blob/main/contents/intelliJ_keymap.md)
