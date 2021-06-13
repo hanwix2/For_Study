@@ -74,7 +74,30 @@ public static Boolean valueOf(boolean b) {
 
 ## 4장 클래스와 인터페이스
 
+### item 15 - "클래스와 멤버의 접근 권한을 최소화하라"
+
+- 잘 설계된 컴포넌트의 특징: **정보은닉 & 캡슐화**
+    - 클래스 내부 데이터와 내부 구현 정보를 외부 컴포넌트부터 잘 숨김
+    - API를 통해서만 다른 컴포넌트와 소통. 내부 동작 방식에 개의치 않음.
+- public 클래스의 인스턴스 필드는 되도록 public이 아니어야 한다.
+    - 꼭 필요한 최소한의 공개 API만 public으로 선언
+    - protected 멤버는 공개 API 임
+    - 테스트만을 위해 클래스, 인터페이스, 멤버를 공개 API로 만들어서는 안된다.
+    - 가변적인 public 인스턴스는 일반적으로 thread-safe 하지 않다.
+        - 예외: 상수(public static final) - 반드시 기본 타입이나 불변 객체 참조
+            > ex) public static final 배열은 변경 가능하므로 주의
+- 정보 은닉의 장점:
+    1. 시스템 개발 속도를 높인다
+    2. 시스템 관리 비용을 낮춘다.
+    3. 성능 최적화에 도움
+    4. 소프트웨어 재사용성을 높인다.
+    5. 큰 시스템을 제작하는 난이도를 낮춘다.
+
 <br/>
+
+
+
+<br>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#Effective-Java)  
 
