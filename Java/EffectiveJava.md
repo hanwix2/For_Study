@@ -372,6 +372,101 @@ public static Boolean valueOf(boolean b) {
         > ex) Integer나 Double의 MIN_VALUE, MAX_VALUE 상수
     - Enum (열거 타입)
     - 인스턴스화할 수 없는 유틸리티 클래스에 담아 공개
+
+<br>
+
+### :label: Item 23 - "태그 달린 클래스보다는 클래스 계층구조를 활용하라"
+
+- 태그 달린 클래스
+    - 용도:
+        - 두 가지 이상의 의미를 표현할 수 있으며, 그중 현재 표현하는 의미를 태그 값으로 알려줌
+    - 단점:
+        - 쓸데없는 코드가 많다.
+            - 열거 타입 선언, 태그 필드, switch 문 등
+        - 가독성 저하
+            - 여러 구현이 한 클래스에 혼합돼 있음
+        - 메모리를 많이 사용
+            - 다른 의미를 위한 코드 포함
+        - 필드를 final로 선언하려면 해당 의미에 쓰이지 않는 필드까지 생성자에서 초기화 필요
+        - 또 다른 의미를 추가하려면 코드 수정이 불가피 & 오류 발생 가능성
+        - 인스턴스의 타입만으로는 현재 나타내는 의미를 알 길이 전혀 없다.
+    - **태그 달린 클래스는 장황하고, 오류를 내기 쉽고, 비효율적이다.**
+        - 클래스 계층 구조를 어설프게 흉내낸 아류일 뿐이다.
+
+```java
+class Figure {
+    enum Shape { RECTANGLE, CIRCLE };
+    // 태그 필드 - 현재 모양을 나타낸다.
+    final Shape shape;
+
+    // 다음 필드들은 모양이 사각형(RECTANGLE)일 때만 쓰인다.
+    double length;
+    double width;
+
+    // 다음 필드는 모양이 원(CIRCLE)일 때만 쓰인다.
+    double radius;
+
+    // 원용 생성자
+    Figure(double radius) {
+        shape = Shape.CIRCLE;
+        this.radius = radius;
+    }
+
+    // 사각형용 생성자
+    Figure(double length, double width) {
+        shape = Shape.RECTANGLE;
+        this.length = length;
+        this.width = width;
+    }
+
+    double area() {
+        switch(shape) {
+            case RECTANGLE:
+                return length * width;
+            case CIRCLE:
+                return Math.PI * (radius * radius);
+            default:
+                throw new AssertionError(shape);
+        }
+    }
+}
+```
+
+<br>
+
+- **클래스 계층 구조**로 바꾸는 방법
+    1. 계층 구조의 root가 될 추상 클래스 정의
+    2. 태그 값에 따라 동작이 달라지는 메소드들을 루트 클래스의 추상 메소드로 선언
+    3. 태그 값에 상관없이 동작이 일정한 메소드들을 루트 클래스에 일반 메소드로 추가
+    4. 모든 하위 클래스에서 공통으로 사용하는 데이터 필드도 루트 클래스로 올림
+    5. 루트 클래스를 확장한 구체 클래스를 의미별로 하나씩 정의
+
+```java
+abstract class Figure {
+    abstract double area();
+}
+
+class Circle extends Figure {
+    final double radius;
+
+    Circle(double radius) { this.radius = radius; }
+
+    @Override double area() { return Math.PI * (radius * radius); }
+}
+
+class Rectangle extends Figure {
+    final double length;
+    final double width;
+
+    Rectangle(double length, double width) {
+        this.length = length;
+        this.width  = width;
+    }
+    
+    @Override double area() { return length * width; }
+}
+```
+
 <br>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#Effective-Java)  
