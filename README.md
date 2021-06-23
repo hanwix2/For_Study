@@ -17,7 +17,7 @@
 <br/>
 
 ## :pushpin: CS 
-* [Algorithm](https://github.com/hanwix2/For_Study/tree/main/algorithm)
+* [Algorithm](https://github.com/hanwix2/For_Study/blob/main/contents/algorithm.md)
 
 <br/>
 
