@@ -754,19 +754,30 @@ class Rectangle extends Figure {
     4. 클래스 생성자를 가리키는 메소드 참조
     5. 배열 생성자를 가리키는 메소드 참조
 
-| 메소드 참조 유형 | 예 | 같은 기능을 하는 람다 |
-| :------------- |----|----------------------|
-| 정적 | Integer::parseInt | str -> Integer.parseInt(str) |
-| 한정적(인스턴스) | Instant.now()::isAfter | Instant then = Instant.now(); <br> t-> then.isAfter(t) |
-| 비한정적(인스턴스) | String::toLowerCase | str -> str.toLowerCase() |
-| 클래스 생성자 | TreeMap<K, V>::new | () -> new TreeMap<K, V>() |
-| 배열 생성자 | int[]::new | len -> new int[len] |
+    | 메소드 참조 유형 | 예 | 같은 기능을 하는 람다 |
+    | :------------- |----|----------------------|
+    | 정적 | Integer::parseInt | str -> Integer.parseInt(str) |
+    | 한정적(인스턴스) | Instant.now()::isAfter | Instant then = Instant.now(); <br> t-> then.isAfter(t) |
+    | 비한정적(인스턴스) | String::toLowerCase | str -> str.toLowerCase() |
+    | 클래스 생성자 | TreeMap<K, V>::new | () -> new TreeMap<K, V>() |
+    | 배열 생성자 | int[]::new | len -> new int[len] |
 
 <br>
 
 - 핵심: 
     - 메소드 참조는 람다의 간단명료한 대안이 될 수 있다.
     - 메소드 참조가 짧고 명확하다면 메소드 참조를 쓰고, 그렇지 않을 때만 람다를 사용하라
+
+<br>
+<br>
+
+### :label: Item 44 - "표준 함수형 인터페이스를 사용하라"
+
+- 핵심:
+    - API를 설계할 때 람다도 염두에 두어야 한다.
+    - 입력값과 반환값에 함수형 인터페이스 타입을 활용하라
+    - 보통은 java.util.function 패키지의 표준 함수형 인터페이스를 사용하는 것이 가장 좋은 선택
+    - 흔치는 않지만 직접 함수형 인터페이스를 만들어 쓰는 편이 나을 수도 있다.
 
 <br/>
 
