@@ -869,6 +869,73 @@ class Rectangle extends Figure {
         > toList(), toMap(), groupingBy(), toSet(), toCollection(collectionFactory), joining()
     - 스트림을 올바로 사용하려면 수집기를 잘 알아두자
 
+<br>
+<br>
+
+### :label: Item 47 - "반환 타입으로는 스트림보다 컬렉션이 낫다"
+
+- 원소 시퀀스를 반환하는 방법(타입)
+    - 이전(~ 자바 7):
+        - **Collection 인터페이스** - 기본
+        - **Iterable 인터페이스** - for-each 문에서만 쓰이거나 일부 Collection 메소드를 구현할 수 없을 때
+        - **배열** - 기본 타입 또는 성능에 민감한 상황
+    - 스트림 등장(자바 8) 이후:
+        - ?
+
+<br>
+
+- 문제: 스트림은 반복(iteration)을 지원하지 않는다. 즉, **for-each로 스트림을 반복할 수 없다.**
+    - Stream 인터페이스는 Iterable 인터페이스가 정의한 추상 메소드를 전부 포함하고 Iterable 인터페이스가 정의한 방식대로 동작한다.
+    - 하지만, *Stream은 Iterable을 확장(extend)하지 않았다.* 
+        > for-each로 스트림을 반복할 수 없는 이유
+    
+- 문제를 해결하는 방법
+    1. Stream의 iterator 메소드에 메소드 참조를 건넨다.
+        - 메소드 참조를 매개변수화된 Iterable로 적절히 형변환 필요
+        - 난잡하고 직관성이 떨어지는 방법
+            ```java
+            for (ProcessHandle ph : (Iterablr<ProcessHandle>) ProcessHandle.allProcesses():iterator) {
+                // 프로세스 처리
+            }
+            ```
+    2. 어댑터 메소드 사용
+        - 따로 형변환 필요 없음
+            ```java
+            // Stream<E>를 Iterable<E>로 중개해주는 어댑터
+            public static <E> Iterable<E> iterableOf(Stream<E> stream) {
+                return stream::iterator;
+            }
+
+            // ----------------------------------
+
+            for (ProcessHandle ph : iterableOf(ProcessHandle.allProcesses())) {
+                // 프로세스 처리
+            }
+            ```
+
+- 반대로 Iterable만 반환하는 API를 스트림 파이프라인에서 처리하는 방법
+    - 어댑터 메소드
+        ```java
+        // Iterable<E>를 Stream<E>로 중개해주는 어댑터
+        public static <E> Stream<E> streamOf(Iterable<E> iterable) {
+            return StreamSupport.stream(iterable.spliterator(), flase);
+        }
+        ```
+
+<br>
+
+- 객체 시퀀스를 반환하는 메소드를 작성할 때 사용자가 한 방식만 사용할 것이라는 근거가 없다면 **반환 타입을 스트림과 컬렉션 모두 만족**하게 하자
+    - **원소 시퀀스를 반환하는 공개 API의 반환 타입에는 Collection이나 그 하위 타입을 쓰는 게 일반적으로 최선이다.**
+        > Collection 인터페이스는 Iterable의 하위 타입이고 stream 메소드도 제공하므로 반복과 스트림을 동시에 지원
+    - **단지 컬렉션을 반환한다는 이유로 덩치 큰 시퀀스를 메모리에 올려서는 안된다.**
+        - 반환하는 시퀀스의 크기가 작다면 ArrayList나 HashSet 같은 **표준 컬렉션** 구현체를 반환
+        - 시퀀스가 크지만 표현을 간결하게 할 수 있다면 **전용 컬렉션**을 구현
+
+<br>
+
+*만약 나중에 Stream 인터페이스가 Iterable을 지원하도록 자바가 수정된다면, 그때는 안심하고 스트림을 반환하면 될 것이다.*
+
+
 <br/>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#Effective-Java)  
