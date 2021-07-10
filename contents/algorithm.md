@@ -3,6 +3,8 @@
 ## :memo: Contents
 - [정렬](#정렬sort)
     - [선택 정렬](#label-선택-정렬selection-sort)
+    - [버블 정렬](#label-버블-정렬bubble-sort)
+    - [삽입 정렬](#label-삽입-정렬insertion-sort)
 
 ---
 
@@ -59,6 +61,44 @@ selectionSort(A[], n) {             // A[1...n]을 정렬
     - 무의미한 순환이 계속된다.
     - 이땐 flag를 두어 순환 중 순서의 변경이 없는 경우를 찾아 이후에 순환을 하지 않도록 하면 된다.
     - 수행시간: Θ(n)
+
+<br>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#algorithm)
+
+<br>
+<br>
+
+## :label: 삽입 정렬(insertion sort)
+
+- 원리:
+    - 이미 정렬된 i 개 짜리 배열에 하나의 원소를 더 더하여 정렬된 i+1 개짜리 배열을 만드는 과정을 반복
+    - 앞부터 차례로 위치를 옮기며, 해당 위치의 원소를 앞에 정렬된 배열의 적절한 위치에 삽입
+    - 귀납법의 원리
+    
+- pseudo code
+    ```java
+    insertionSort(A[], n) {
+        for i <- 2 to n {
+            loc <- i-1;
+            newItem <- A[i];
+
+            while (loc >= 1 && newItem < A[loc]) {
+                A[loc+1] <- A[loc];
+                loc--;
+            }
+            A[loc+1] <- newItem;
+        }
+    }
+    ```
+
+- 수행 시간: **O(n²)**
+
+<br>
+
+- 특징:
+    - 비효율적인 알고리즘 - 최악의 경우의 수행시간 Θ(n²)
+    - 배열이 거의 정렬된 상태로 입력되는 경우엔 수행시간 Θ(n)
 
 <br>
 
