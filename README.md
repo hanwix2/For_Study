@@ -1,5 +1,5 @@
 # For_Study
-:books: Programming 관련 & CS 및 기술 면접 대비 이론 정리
+:books: Programming 관련 & CS 이론 정리
 
 ---
 
