@@ -30,3 +30,29 @@ selectionSort(A[], n) {             // A[1...n]을 정렬
 <br>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#algorithm)
+
+<br>
+<br>
+
+## :label: 버블 정렬(bubble sort)
+
+- 원리:
+    - 왼쪽부터 차례로 이웃한 수를 비교하면서 큰 수를 오른쪽으로 보낸다.
+    - 위의 작업 루프를 모든 배열이 정렬될 때까지 계속 돌린다.
+    > **"인접한 것을 순서대로 맞춰 나간다."**
+
+- pseudo code
+    ```java
+    bubbleSort(A[], n) {
+        for last <- n downto 2 {
+            for i <- 1 to (last-1)
+                if (A[i] > A[i+1]) then A[i] ⇔ A[i+1];
+        }
+    }
+    ```
+
+- 수행 시간: **Θ(n²)**
+
+<br>
+
+> :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#algorithm)
