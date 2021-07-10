@@ -55,4 +55,11 @@ selectionSort(A[], n) {             // A[1...n]을 정렬
 
 <br>
 
+- 이미 정렬된 경우:
+    - 무의미한 순환이 계속된다.
+    - 이땐 flag를 두어 순환 중 순서의 변경이 없는 경우를 찾아 이후에 순환을 하지 않도록 하면 된다.
+    - 수행시간: Θ(n)
+
+<br>
+
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#algorithm)
