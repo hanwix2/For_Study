@@ -10,6 +10,7 @@
 * [MySql](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-mysql)
 * [Data Structure](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-data-structure)
 * [Network](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-network)
+* [Operating System](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-operating-system)
 * [DevOps](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-devops)
 * [ETC](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-etc)
 
