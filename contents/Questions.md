@@ -852,10 +852,52 @@ B-Tree
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#questions)  
 
-
 ---
 
 ## :label: Network
+
+### 🎯 TCP와 UDP의 차이
+Connection 
+
+### 🎯 대규모로 TCP 사용시의 문제점은?
+- 매번 connect, close 시 handshaking으로 병목 발생
+- 해결방법 – 세션, connection pool
+
+### 🎯 내부 IP와 외부 IP
+*공인 ip vs 사설 ip*
+- 둘로 나눈 이유? 
+    - ipv4 주소체계는 표현 수의 한계 존재
+- 내부 IP를 사용하는 이유 
+    - 외부와 단절된 ip 사용
+    - 따로 네트워크 주소체계 구축 필요시 사용
+
+### 🎯 L4, L7 로드 밸런서?
+*‘OSI 7계층’*
+- 더 빠른 것은 L4
+- 요즘엔 기술력의 발전으로 L7도 빠름
+> https://m.post.naver.com/viewer/postView.nhn?volumeNo=27046347&memberNo=2521903
+
+### 🎯 L4를 사용했을 때 특정 서버에 몰리는 현상이 발생하는 환경은?
+*‘공인 IP & 사설 IP’*
+- Virtual IP 단위로만 로드밸런싱 - 하나의 vIP에 연결된 서버의 수가 비슷해야 함
+
+### 🎯 멀티 캐스팅이란?
+- 네트워크 관점 - 특정 목적 & 명확한 도착지가 있다.  
+*‘broadcasting’ 은?*
+
+### 🎯 CDN이란?
+- 물리적 거리 & 데이터 유실
+> https://www.akamai.com/kr/ko/cdn/what-is-a-cdn.jsp
+
+### 🎯 포트포워딩이란?
+*내 컴퓨터에 WAS를 띄웠을 때 다른 사람이 접속하게 할 수 있을까?*
+> 집에서도 사설 서비스 테스트 가능
+
+### 🎯 NAS란?
+- 네트워크 주소 변환
+- IP 패킷의 TCP/UDP 포트 숫자와 소스 및 목적지의 IP 주소 등을 재기록하면서 라우터를 통해 네트워크 트래픽을 주고 받는 기술
+
+<br>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#questions)  
 
