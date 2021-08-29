@@ -340,7 +340,7 @@ javac로 컴파일하는 것은 그저 어떤 OS에서도 수행될 수 있는 �
 - 성능 테스트
 > 'jconsole', 'java mission control', 'java flight recoder', 'jvisualvm'
 
-### Java 심화
+## Java 심화
 
 ### 🎯 클래스끼리 상속을 받으면 어떤 점에서 문제가 발생?
 - 클래스 간의 상속은 유지보수성 측면에서 좋을까?

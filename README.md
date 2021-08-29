@@ -4,14 +4,14 @@
 ---
 
 ## :pushpin: [Questions](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md)
-* [Java](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#java)
-* [Web](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#web)
-* [Spring](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#spring)
-* [MySql](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#mysql)
-* [Data Structure](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#data-structure)
-* [Network](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#network)
-* [DevOps](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#devops)
-* [ETC](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#etc)
+* [Java](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-java)
+* [Web](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-web)
+* [Spring](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-spring)
+* [MySql](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-mysql)
+* [Data Structure](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-data-structure)
+* [Network](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-network)
+* [DevOps](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-devops)
+* [ETC](https://github.com/hanwix2/For_Study/blob/main/contents/Questions.md#label-etc)
 
 <br/>
 
