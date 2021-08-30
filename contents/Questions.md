@@ -652,7 +652,9 @@ javac로 컴파일하는 것은 그저 어떤 OS에서도 수행될 수 있는 �
 - **CGLIB** 
     - 인터페이스를 구현하지 않은 클래스라면 CGLIB의 방식으로 AOP 프록시를 생성
 > [토비의 스프링 6장 참고]  
-> https://gmoon92.github.io/spring/aop/2019/04/20/jdk-dynamic-proxy-and-cglib.html
+> https://gmoon92.github.io/spring/aop/2019/04/20/jdk-dynamic-proxy-and-cglib.html  
+> 위빙 - https://jaehun2841.github.io/2018/07/22/2018-07-22-spring-aop4/#aspectj%EB%9E%80  
+> spring proxy 생성 방법 - https://soolow-and-sooteady.tistory.com/1  
 
 ### 🎯 JDK Dynamic Proxy 와 CGLIB 의 차이
 - 앞서..
