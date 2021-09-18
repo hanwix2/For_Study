@@ -38,6 +38,7 @@
 ## :pushpin: Spring
 * [스프링 입문을 위한 자바 객체 지향의 원리와 이해](https://github.com/hanwix2/For_Study/blob/main/contents/oopForSpring.md)
 * [Spring 이론](https://github.com/hanwix2/For_Study/blob/main/contents/spring.md)
+* [JPA](https://github.com/hanwix2/For_Study/blob/main/contents/jpa.md)
 
 <br>
 
