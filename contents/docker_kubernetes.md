@@ -23,7 +23,7 @@
 ### 가상 머신과 도커 컨테이너
 
 <p align="center">
-    <img src="./images/VM and Docker.png" alt="가상 머신과 도커 컨테이너의 구조" width="60%" height="60%"/>
+    <img src="./images/VM and Docker.png" alt="가상 머신과 도커 컨테이너의 구조" width="70%" height="70%"/>
     <br/>
     가상 머신과 도커 컨테이너의 구조
     </p>
@@ -49,6 +49,6 @@
 <br>
 
 > :house: [home](https://github.com/hanwix2/For_Study) :top: [top](#dockerkubernetes)  
-> https://medium.com/@darkrasid/docker%EC%99%80-vm-d95d60e56fdd  
+> https://dydtjr1128.gitbook.io/understanding-docker/1.start-docker/1-starting-docker  
 
 <br>
