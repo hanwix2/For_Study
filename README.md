@@ -42,6 +42,11 @@
 
 <br>
 
+## :pushpin: DB
+* [Real MySQL](https://github.com/hanwix2/For_Study/blob/main/contents/real_mysql.md)
+
+<br>
+
 ## :pushpin: CI/CD
 * [초보를 위한 젠킨스2 활용 가이드 2e](https://github.com/hanwix2/For_Study/blob/main/contents/Jenkins2Guide.md)
 
