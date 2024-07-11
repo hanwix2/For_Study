@@ -6,6 +6,8 @@
 1. [CHAR vs VARCHAR](#1-char-vs-varchar)
 2. [VARCHAR vs TEXT](#2-varchar-vs-text)
 3. [COUNT(*) & COUNT(DISTINCT)](#3-count--countdistinct)
+4. [페이징 쿼리](#4-페이징-쿼리)
+5. [Stored Function](#5-stored-function)
 
 ---
 
@@ -39,3 +41,54 @@
 ## 2. VARCHAR vs TEXT
 
 ## 3. COUNT(*) & COUNT(DISTINCT)
+
+## 4. 페이징 쿼리
+
+페이징 쿼리를 사용하는 이유: DB 및 어플리케이션 리소스 효율 증가 및 처리 시간 단축
+
+1. **LIMIT & OFFSET**
+    - 특정 위치(offset)에서 특정 수(limit) 만큼 데이터를 가져오는 방법
+    - 한계:
+      - DB 에 더 부하가 있을 수 있다
+      - 특정 offset 이후 데이터만 가져올 수 없음. 해당 위치까지 순차적으로 모든 레코드를 읽어야 함
+      - 페이지가 늘어날 수록 더 많은 데이터를 읽어야 하고 점점 부하가 더 커짐
+2. **범위 기반 방식**
+    - where 절에서 숫자 또는 날짜의 범위를 직접 지정
+    - 단순하고 부하가 적음
+    - 주로 배치 또는 migration 작업에 사용
+    - 쿼리 성능 향상을 위해 범위를 설정하는 컬럼에 대해 인덱스를 생성하는 것이 좋음
+3. **데이터 개수 기반 방식**
+    - 지정된 데이터 건 수 만큼 결과 데이터를 반환
+    - ORDER BY & LIMIT 절이 함께 사용
+    - 처음 쿼리와 N회차 쿼리가 다름 (WHERE 절에 사용되는 조건(동등, 범위) 타입에 따라 쿼리 형태가 다름)
+    - 저장된 데이터와 서비스 요구사항에 따라 적절한 쿼리가 수행되도록 처리하는 것이 중요
+    - 적절히 인덱스를 사용하는 것이 중요
+      - 여러 컬럼의 조건을 사용하면서 인덱스를 지정했을 때 order by 에도 동일한 인덱스를 사용할 수 있도록 유의
+    - e.g.
+      - 1번째 쿼리:
+      ```
+      SELECT *
+      FROM payments
+      WHERE user_id = ?
+      ORDER BY id
+      LIMIT 30
+      ```
+      - N회차 쿼리:
+      ```
+      SELECT *
+      FROM payments
+      WHERE user_id = ?
+      AND id > {이전 데이터의 마지막 id}
+      ORDER BY id
+      LIMIT 30
+      ``` 
+
+## 5. Stored Function
+
+### DETERMINISTIC vs NOT DETERMINISTIC
+
+- DETERMINISTIC
+    - 동일 상태와 동일 입력으로 호출 -> 동일한 결과 반환
+        - 여기서 입력이란, 함수의 인자 뿐만 아니라 함수가 참조하는 데이터도 포함
+    - if not -> NOT DETERMINISTIC
+
